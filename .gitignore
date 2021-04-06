@@ -1,0 +1,8 @@
+*.yaml
+*.cnf
+target/
+tmp/
+.idea/
+*.iml
+.project
+*.txt
