@@ -19,9 +19,7 @@
         <maven.compiler.target>10</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
-         <properties>
   <sonar.projectKey>gibocx_projectInfo</sonar.projectKey>
   <sonar.organization>gibocx</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
