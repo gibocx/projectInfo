@@ -4,6 +4,7 @@ import download.Category;
 import download.Download;
 import download.actions.DownloadActions;
 import utility.CalcChecksum;
+import utility.Placeholders;
 import utility.Time;
 
 import java.util.Comparator;
@@ -17,6 +18,10 @@ public class DownloadAfter implements DownloadMethod {
     private final long minTimeDifference;
 
     public DownloadAfter(Map<String, String> data) {
+        if (data == null) {
+            throw new IllegalArgumentException("map can not be null!");
+        }
+
         url = data.get("url");
         contentType = data.get("contentType");
         try {
@@ -55,7 +60,7 @@ public class DownloadAfter implements DownloadMethod {
 
         for (Category category : categories) {
             if (checkCategory(category)) {
-                byte[] data = Download.downloadByteArray(url.replace("#category#", category.getName()), contentType);
+                byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
 
                 category.setLastDownloaded(Time.getUnixTimestamp());
                 category.setChecksum(CalcChecksum.checksum(data));
@@ -79,7 +84,7 @@ public class DownloadAfter implements DownloadMethod {
     }
 
     private long getOldestDownload(Set<Category> categories) {
-        return  categories.stream().min(Comparator.comparingLong(Category::getLastDownloaded))
+        return categories.stream().min(Comparator.comparingLong(Category::getLastDownloaded))
                 .orElse(new Category("null")).getLastDownloaded();
     }
 

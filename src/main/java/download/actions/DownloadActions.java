@@ -4,6 +4,9 @@ import download.Category;
 
 import java.util.Set;
 
+/**
+ * This Class is a wrapper for multiple actions.
+ */
 public class DownloadActions implements DownloadAction {
     private final Set<DownloadAction> actions;
 
@@ -15,8 +18,8 @@ public class DownloadActions implements DownloadAction {
     public boolean action(byte[] data, Category category) {
         boolean success = true;
 
-        for(DownloadAction action : actions) {
-            if(action.action(data, category)) {
+        for (DownloadAction action : actions) {
+            if (action.action(data, category)) {
                 success = false;
             }
         }
@@ -28,8 +31,8 @@ public class DownloadActions implements DownloadAction {
     public boolean init() {
         boolean success = true;
 
-        for(DownloadAction action : actions) {
-            if(!action.init()) {
+        for (DownloadAction action : actions) {
+            if (!action.init()) {
                 success = false;
             }
         }
@@ -41,8 +44,8 @@ public class DownloadActions implements DownloadAction {
     public boolean finish() {
         boolean success = true;
 
-        for(DownloadAction action : actions) {
-            if(!action.finish()) {
+        for (DownloadAction action : actions) {
+            if (!action.finish()) {
                 success = false;
             }
         }

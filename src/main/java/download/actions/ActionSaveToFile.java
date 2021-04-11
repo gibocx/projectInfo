@@ -21,7 +21,7 @@ public class ActionSaveToFile implements DownloadAction {
     }
 
     public boolean action(byte[] data, Category category) {
-        if(data == null || category == null) {
+        if (data == null || category == null) {
             return false;
         }
 
@@ -48,14 +48,6 @@ public class ActionSaveToFile implements DownloadAction {
 
     String computePath() {
         return Placeholders.replace(this.path);
-    }
-
-    public boolean init() {
-        return true;
-    }
-
-    public boolean finish() {
-        return true;
     }
 
     protected String getRawPath() {

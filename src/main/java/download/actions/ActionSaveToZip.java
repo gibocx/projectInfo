@@ -35,7 +35,7 @@ public class ActionSaveToZip extends ActionSaveToFile {
         try {
             if (FileStuff.createFile(file)) {
                 ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file));
-                ZipEntry e = new ZipEntry(Placeholders.replace(zipEntryName,category.getName()));
+                ZipEntry e = new ZipEntry(Placeholders.replace(zipEntryName, category.getName()));
                 out.putNextEntry(e);
 
                 out.write(data);
@@ -51,6 +51,6 @@ public class ActionSaveToZip extends ActionSaveToFile {
     }
 
     public String getZipEntryName(String cat) {
-        return Placeholders.replace(zipEntryName,cat);
+        return Placeholders.replace(zipEntryName, cat);
     }
 }

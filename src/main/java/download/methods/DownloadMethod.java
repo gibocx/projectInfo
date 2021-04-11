@@ -17,5 +17,7 @@ public interface DownloadMethod {
      *
      * @return true if it should be downloaded again
      */
-    boolean check(Set<Category> categories);
+    default boolean check(Set<Category> categories) {
+        return true;
+    };
 }

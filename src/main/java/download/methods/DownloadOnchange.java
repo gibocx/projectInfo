@@ -4,6 +4,7 @@ import download.Category;
 import download.Download;
 import download.actions.DownloadActions;
 import utility.CalcChecksum;
+import utility.Placeholders;
 import utility.Time;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ public class DownloadOnchange implements DownloadMethod {
         action.init();
 
         for (Category category : categories) {
-            byte[] data = Download.downloadByteArray(url.replace("#category#", category.getName()), contentType);
+            byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
 
             category.setLastDownloaded(Time.getUnixTimestamp());
 

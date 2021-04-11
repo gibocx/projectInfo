@@ -1,6 +1,7 @@
 package download;
 
 import org.apache.commons.text.StringEscapeUtils;
+import utility.Placeholders;
 import utility.TimeDiff;
 
 import java.io.*;
@@ -31,6 +32,8 @@ public class Download {
      * @return downloaded contents as byte[], empty array when problems occur
      */
     public static byte[] downloadByteArray(String url, String contentType) {
+        logger.fine(() -> "Downloading url : " + url);
+
         try {
             TimeDiff time = new TimeDiff();
             HttpURLConnection connection = connectionSetProperties(url, contentType);

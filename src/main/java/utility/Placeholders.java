@@ -1,6 +1,5 @@
 package utility;
 
-import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,12 +8,12 @@ public class Placeholders {
     /**
      * Replaces the placeholders in the given String. A placeholder is enclosed in #.
      * These placeholders do exist:
-     *      time : timeFormat e.g. <code>dd-M-yyyy_hh-mm-ss</code>
-     *      thread : id, name, threadGroup
-     *      random -> random integer
-     *
+     * time : timeFormat e.g. <code>dd-M-yyyy_hh-mm-ss</code>
+     * thread : id, name, threadGroup
+     * random -> random integer
+     * <p>
      * The placeholders ignores upper or lowercase letters. Therefore time equals tImE.
-     *
+     * <p>
      * Some examples
      * #thread=id# -> current Thread id
      * #time=dd-M-yyyy_hh-mm-ss# -> current time formattted into the given format
@@ -31,12 +30,12 @@ public class Placeholders {
     /**
      * Replaces the placeholders in the given String. A placeholder is enclosed in #.
      * These placeholders do exist:
-     *      time : timeFormat e.g. <code>dd-M-yyyy_hh-mm-ss</code>
-     *      thread : id, name, threadGroup
-     *      random -> random integer
-     *
+     * time : timeFormat e.g. <code>dd-M-yyyy_hh-mm-ss</code>
+     * thread : id, name, threadGroup
+     * random -> random integer
+     * <p>
      * The placeholders ignores upper or lowercase letters. Therefore time equals tImE.
-     *
+     * <p>
      * Some examples
      * #thread=id# -> current Thread id
      * #time=dd-M-yyyy_hh-mm-ss# -> current time formattted into the given format
@@ -46,7 +45,7 @@ public class Placeholders {
      * @return String with replaced placeholders
      */
     public static String replace(String str) {
-        if(str == null)
+        if (str == null)
             return null;
 
         // check if fileNameFormat is valid -> even amount of #
@@ -57,7 +56,7 @@ public class Placeholders {
         StringBuilder sb = new StringBuilder();
 
         while (m.find()) {
-            switch (m.group().split("=")[0].toUpperCase(StandardCharsets.UTF_8)) {
+            switch (m.group().split("=")[0].toUpperCase()) {
                 case "TIME":
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(m.group().split("=")[1]);
                     String toReplace = Time.curDateTime().format(formatter);
@@ -77,8 +76,8 @@ public class Placeholders {
     }
 
     public static String threadInfo(String info) {
-        if(info != null) {
-            switch (info.toUpperCase(StandardCharsets.UTF_8)) {
+        if (info != null) {
+            switch (info.toUpperCase()) {
                 case "ID":
                     return String.valueOf(Thread.currentThread().getId());
 

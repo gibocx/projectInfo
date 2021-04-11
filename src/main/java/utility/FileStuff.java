@@ -61,11 +61,12 @@ public class FileStuff {
 
     /**
      * Deletes the given File
+     *
      * @param file File to delete
      * @return true only if successfully deleted
      */
     public static boolean delete(File file) {
-        if(isValid(file)) {
+        if (isValid(file)) {
             return file.delete();
         }
         return false;
@@ -73,6 +74,7 @@ public class FileStuff {
 
     /**
      * Deletes the given path
+     *
      * @param path file path to delete
      * @return true only if successfully deleted
      */

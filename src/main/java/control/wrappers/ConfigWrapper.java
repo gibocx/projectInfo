@@ -13,9 +13,9 @@ public class ConfigWrapper {
     private int checkConfigReload;
     private int executorThreads;
     private int scheduledThreads;
-    private Map<String, String> db;
+    private final Map<String, String> db = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private GeneralDownloadWrapper download;
-    private List<JobWrapper> jobs;
+    private Set<JobWrapper> jobs;
 
     public void setConfigReload(String configReload) {
         this.configReload = configReload;
@@ -23,6 +23,7 @@ public class ConfigWrapper {
 
     /**
      * Gets the check interval in seconds
+     *
      * @return check interval in seconds, 0 when empty
      */
     public int getCheckIntervals() {
@@ -33,12 +34,17 @@ public class ConfigWrapper {
         this.checkIntervals = checkIntervals;
     }
 
+    public Map<String, String> getDb() {
+        return db;
+    }
+
     public void setDb(Map<String, String> db) {
-        this.db = db;
+        this.db.putAll(db);
     }
 
     /**
      * Gets the number of executor threads
+     *
      * @return number of executor threads, 0 when empty
      */
     public int getExecutorThreads() {
@@ -51,6 +57,7 @@ public class ConfigWrapper {
 
     /**
      * Gets the number of scheduled executor threads
+     *
      * @return number of scheduled executor threads, 0 when empty
      */
     public int getScheduledThreads() {
@@ -63,10 +70,11 @@ public class ConfigWrapper {
 
     /**
      * Returns true only when configReload matches "yes" or "YES"
+     *
      * @return true only when automactic config reload is required
      */
     public boolean isAutomaticReload() {
-        if(configReload == null)
+        if (configReload == null)
             return false;
 
         return configReload.equalsIgnoreCase("yes");
@@ -74,6 +82,7 @@ public class ConfigWrapper {
 
     /**
      * Gets the GeneralDownloadWrapper
+     *
      * @return general download config or null
      */
     public GeneralDownloadWrapper getDownload() {
@@ -86,6 +95,7 @@ public class ConfigWrapper {
 
     /**
      * Constructs a Set of all configured Jobs
+     *
      * @return Set of Jobs or empty Set
      */
     public Set<Job> getJobs() {
@@ -100,7 +110,7 @@ public class ConfigWrapper {
         return set;
     }
 
-    public void setJobs(List<JobWrapper> jobs) {
+    public void setJobs(Set<JobWrapper> jobs) {
         this.jobs = jobs;
     }
 

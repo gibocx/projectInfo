@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ThreadRandom {
     /**
      * Returns an int value
+     *
      * @return random int
      */
     public static int rand() {
@@ -13,6 +14,7 @@ public class ThreadRandom {
 
     /**
      * Random int value including min but excluding max
+     *
      * @param min min value
      * @param max max value
      * @return random int between min and excluding max
@@ -23,6 +25,7 @@ public class ThreadRandom {
 
     /**
      * Returns a positive int including 0
+     *
      * @return random positive int
      */
     public static int randAbs() {
@@ -31,6 +34,7 @@ public class ThreadRandom {
 
     /**
      * Returns a positive int up to max
+     *
      * @param max max value
      * @return random int between 0 and max
      */

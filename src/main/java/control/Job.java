@@ -34,13 +34,14 @@ public class Job {
         this.description = description;
         this.name = name;
 
-        for(String str : categories) {
+        for (String str : categories) {
             this.categories.add(new Category(str));
         }
     }
 
     /**
      * Checks if a Job shall be downloaded again.
+     *
      * @return true only when a job shall be downloaded again
      */
     public boolean check() {
@@ -65,6 +66,7 @@ public class Job {
 
     /**
      * Gets the description of this job
+     *
      * @return description
      */
     public String getDescription() {
@@ -77,6 +79,7 @@ public class Job {
 
     /**
      * Gets the name of this job
+     *
      * @return name
      */
     public String getName() {

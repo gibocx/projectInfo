@@ -7,7 +7,7 @@ public class InsertInfo {
     private final Map<String, String> data;
 
     public InsertInfo(Map<String, String> data) {
-        if(data == null || data.isEmpty()) {
+        if (data == null || data.isEmpty()) {
             throw new IllegalArgumentException("Map can not be empty or null!");
         }
 
@@ -21,7 +21,6 @@ public class InsertInfo {
 
         this.data = data;
 
-        // TODO: 28.03.2021 check query better, no drop, alter, delete, update, contains ; and ? .... etc
         if (query == null) {
             throw new IllegalArgumentException("Query can not be null!");
         }

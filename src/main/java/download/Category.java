@@ -24,7 +24,7 @@ public class Category {
     }
 
     public void setLastDownloaded(long lastDownloaded) {
-        if(lastDownloaded < 0) {
+        if (lastDownloaded < 0) {
             throw new IllegalArgumentException("lastDownloaded can not be negative!");
         }
         this.lastDownloaded = lastDownloaded;

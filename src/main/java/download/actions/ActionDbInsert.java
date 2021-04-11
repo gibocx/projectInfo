@@ -1,7 +1,7 @@
 package download.actions;
 
 import db.RunQuery;
-import db.StartConnection;
+import db.Connect;
 import download.Category;
 import insert.InsertDataType;
 import insert.InsertInfo;
@@ -32,17 +32,16 @@ public class ActionDbInsert implements DownloadAction {
 
     @Override
     public boolean init() {
-        con = StartConnection.getConnection(in.getSchema());
-
-        insertData = InsertMethodFactory.newMethod(in,new RunQuery(in.getQuery(), con));
+        con = Connect.getConnection(in.getSchema());
+        insertData = InsertMethodFactory.newMethod(in, new RunQuery(in.getQuery(), con));
 
         return (con != null && insertData != null);
     }
+
     @Override
     public boolean finish() {
 
-        // close open transaction
-        StartConnection.closeQuietly(con);
+        Connect.closeQuietly(con);
         return true;
     }
 }

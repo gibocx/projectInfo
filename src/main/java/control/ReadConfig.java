@@ -9,6 +9,7 @@ import control.status.HealthCheck;
 import control.status.UpSince;
 import control.wrappers.ConfigWrapper;
 import control.wrappers.GeneralDownloadWrapper;
+import db.Connect;
 import download.Download;
 import download.UserAgentPool;
 import utility.CalcChecksum;
@@ -25,12 +26,13 @@ import java.util.logging.Logger;
  */
 public class ReadConfig {
     private static final Logger logger = Logger.getGlobal();
+    private static final File CONFIG_FILE = new File("./projectInfo.yaml".replace("/", File.separator));
     private static boolean automaticReload;
     private static long configFileChecksum;
-    private static final File CONFIG_FILE = new File("./projectInfo.yaml".replace("/", File.separator));
 
     /**
      * Forces the config to be reloaded
+     *
      * @return true when successful
      */
     public static boolean forceRead() {
@@ -39,6 +41,8 @@ public class ReadConfig {
 
         try {
             ConfigWrapper config = mapper.readValue(new File("projectInfo.yaml"), ConfigWrapper.class);
+
+            Connect.start(config.getDb());
 
             ExecutorHandler.startExecutor(config.getExecutorThreads());
             ExecutorHandler.startScheduledExecutor(config.getScheduledThreads());
@@ -78,9 +82,9 @@ public class ReadConfig {
         return true;
     }
 
-
     /**
      * Suggests to reload the config File. Only happens when the Checksum has changed.
+     *
      * @return true only when read
      */
     public static boolean read() {
@@ -94,9 +98,9 @@ public class ReadConfig {
         return forceRead();
     }
 
-
     /**
      * Checks if automatic config file reload is enabled
+     *
      * @return true when enables
      */
     public static boolean isAutomaticReload() {

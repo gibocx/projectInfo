@@ -101,7 +101,7 @@ public class UserAgentPool {
     }
 
     public static void setDataFormat(DataFormat dataFormat) {
-        if(dataFormat != null) {
+        if (dataFormat != null) {
             UserAgentPool.dataFormat = dataFormat;
         } else {
             UserAgentPool.dataFormat = DataFormat.NONE;
@@ -110,18 +110,8 @@ public class UserAgentPool {
     }
 
     public static void setDataFormat(String format) {
-        if(format != null) {
-            switch (format.toUpperCase(StandardCharsets.UTF_8)) {
-                case "PLAINTEXT":
-                    dataFormat = DataFormat.PLAINTEXT;
-                    break;
-                case "NONE":
-                    dataFormat = DataFormat.NONE;
-                    break;
-                default:
-                    dataFormat = DataFormat.NONE;
-                    logger.info(() -> "No correct dataFormat for UserAgentPool found : " + dataFormat);
-            }
+        if (format != null) {
+            dataFormat = DataFormat.enumOf(format);
         } else {
             logger.info("Format can not be null!");
             dataFormat = DataFormat.NONE;
@@ -141,6 +131,7 @@ public class UserAgentPool {
 
     /**
      * Sets the UserAgentFile
+     *
      * @param file file to set
      * @return true only when file is valid and was set
      */
@@ -156,6 +147,7 @@ public class UserAgentPool {
     /**
      * Scheduls the UserAgentPool at the specified rate. When the reload period is
      * 0 the reload is canceled.
+     *
      * @param reloadPeriod Rate at which the reload is performed
      * @return true if success
      */
@@ -168,7 +160,7 @@ public class UserAgentPool {
         }
 
         // Cancel automatic reload
-        if(reloadPeriod == 0) {
+        if (reloadPeriod == 0) {
             return true;
         }
 
@@ -181,7 +173,4 @@ public class UserAgentPool {
         return true;
     }
 
-    public enum DataFormat {
-        PLAINTEXT, NONE
-    }
 }

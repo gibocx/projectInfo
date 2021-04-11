@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class DownloadActionFactory {
     public static DownloadAction newAction(Map<String, String> data) {
-        if(data == null) {
+        if (data == null) {
             throw new IllegalArgumentException("data can not be null!");
         } else {
-            if(!data.containsKey("action") || data.get("action") == null) {
+            if (!data.containsKey("action") || data.get("action") == null) {
                 throw new IllegalArgumentException("data does not contain the key \"action\" or is null!");
             }
         }
@@ -18,7 +18,7 @@ public class DownloadActionFactory {
         } catch (ClassNotFoundException ex) {
             throw new IllegalArgumentException(data.get("action") + " is not valid DownloadAction!");
         } catch (Exception ex) {
-            throw new IllegalArgumentException(ex.getMessage() + " occurred in DownloadActionFactory");
+            throw new IllegalArgumentException(ex);
         }
     }
 }

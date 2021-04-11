@@ -69,15 +69,15 @@ public class UserAgentPoolTest {
     public void readFromFileEnum() {
         UserAgentPool.clear();
 
-        UserAgentPool.setDataFormat(UserAgentPool.DataFormat.NONE);
+        UserAgentPool.setDataFormat(DataFormat.NONE);
         UserAgentPool.readAgentsFromFile(f);
         Assert.assertEquals(0,UserAgentPool.getPoolSize());
 
-        UserAgentPool.setDataFormat(UserAgentPool.DataFormat.PLAINTEXT);
+        UserAgentPool.setDataFormat(DataFormat.PLAINTEXT);
         UserAgentPool.readAgentsFromFile(f);
         Assert.assertEquals(5,UserAgentPool.getPoolSize());
 
-        UserAgentPool.setDataFormat((UserAgentPool.DataFormat)null);
+        UserAgentPool.setDataFormat((DataFormat)null);
         UserAgentPool.readAgentsFromFile(f);
         Assert.assertEquals(0,UserAgentPool.getPoolSize());
     }
@@ -106,7 +106,7 @@ public class UserAgentPoolTest {
     @Test
     public void readFromFile() {
         UserAgentPool.clear();
-        UserAgentPool.setDataFormat(UserAgentPool.DataFormat.PLAINTEXT);
+        UserAgentPool.setDataFormat(DataFormat.PLAINTEXT);
 
         Assert.assertTrue(UserAgentPool.readAgentsFromFile(f));
         Assert.assertEquals(5,UserAgentPool.getPoolSize());
@@ -125,7 +125,7 @@ public class UserAgentPoolTest {
     @Test
     public void setUserAgentFile() {
         UserAgentPool.clear();
-        UserAgentPool.setDataFormat(UserAgentPool.DataFormat.PLAINTEXT);
+        UserAgentPool.setDataFormat(DataFormat.PLAINTEXT);
 
         Assert.assertTrue(UserAgentPool.setUserAgentFile(f));
         UserAgentPool.readAgentsFromFile();

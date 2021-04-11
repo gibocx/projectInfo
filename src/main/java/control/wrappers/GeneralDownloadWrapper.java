@@ -1,7 +1,9 @@
 package control.wrappers;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class GeneralDownloadWrapper {
     private int connectionTimeout, readTimeout;
@@ -62,7 +64,7 @@ public class GeneralDownloadWrapper {
     }
 
     public void setUserAgentFileMode(String userAgentFileMode) {
-        this.userAgentFileMode = userAgentFileMode.toUpperCase(StandardCharsets.UTF_8);
+        this.userAgentFileMode = userAgentFileMode.toUpperCase();
     }
 
     public Set<String> getUserAgents() {

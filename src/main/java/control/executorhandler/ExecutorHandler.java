@@ -5,11 +5,15 @@ import java.util.logging.Logger;
 
 public class ExecutorHandler {
     static final Logger logger = Logger.getGlobal();
-    private static final int STD_NUM_THREADS = 2;
+    private static final int STD_NUM_THREADS = 1;
+    private static final long SHUTDOWN_GRACE_TIME = 10000;
     private static int submittedJobs = 0;
     private static ExecutorService executor;
     private static ScheduledThreadPoolExecutor scheduledExecutor;
-    private static final long SHUTDOWN_GRACE_TIME = 10000;
+
+    private ExecutorHandler() {
+        throw new IllegalArgumentException("ExecutorHandler Utility class!");
+    }
 
     /**
      * Starts the normal Executor with a fixed ThreadPool of
@@ -19,6 +23,7 @@ public class ExecutorHandler {
      * method is called with the same nThreads as the current running
      * Executor nothing happens, else the Executor is shutdown and
      * restarted.
+     *
      * @param nThreads number of Threads in the pool
      */
     public static void startExecutor(int nThreads) {
@@ -44,6 +49,7 @@ public class ExecutorHandler {
      * method is called with the same nThreads as the current running
      * Executor nothing happens, else the Executor is shutdown and
      * restarted.
+     *
      * @param nThreads number of Threads in the pool
      */
     public static void startScheduledExecutor(int nThreads) {
@@ -73,6 +79,7 @@ public class ExecutorHandler {
 
     /**
      * Submits the provided task for execution in the ExecutorService.
+     *
      * @param task Runnable task to execute
      * @return true only if the task could be submitted
      */
@@ -137,6 +144,7 @@ public class ExecutorHandler {
     /**
      * Gets the standard number of Threads. These number of Threads
      * is at least used for each Executor.
+     *
      * @return standard number of Threads
      */
     public static int getStdNumThreads() {
@@ -145,6 +153,7 @@ public class ExecutorHandler {
 
     /**
      * Gets the number of submitted task from the normal executor
+     *
      * @return number of submitted task
      */
     public static int getSubmittedJobs() {
@@ -176,10 +185,6 @@ public class ExecutorHandler {
         }
 
         return nThreads;
-    }
-
-    private ExecutorHandler() {
-        throw new IllegalArgumentException("ExecutorHandler Utility class!");
     }
 
     private static void completeShutdown(ExecutorService service) {

@@ -3,24 +3,27 @@ package insert;
 
 import db.RunQuery;
 import download.Category;
+import utility.Concat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class InsertCSV implements InsertDataType {
-    public static final String COMMA_DELIMITER = ",";
+    public static final String COMMA_DELIMITER = ";";
+    private static final Logger logger = Logger.getGlobal();
     private final RunQuery run;
-
     private final int numDesiredColumns;
     private final int[] desiredColumns;
 
     public InsertCSV(InsertInfo in, RunQuery run) {
-        if(run == null) {
+        if (run == null) {
             throw new IllegalArgumentException("run can not be empty!");
         }
 
-        if(in == null) {
+        if (in == null) {
             throw new IllegalArgumentException("in can not be empty!");
         }
 
@@ -64,11 +67,13 @@ public class InsertCSV implements InsertDataType {
                 line = reader.readLine();
             }
 
-            run.complete();
-        } catch (IOException ex) {
+            run.execute();
+        } catch (IOException | SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     /**
@@ -80,10 +85,21 @@ public class InsertCSV implements InsertDataType {
     private String[] computeValues(String[] columns) {
         String[] values = new String[numDesiredColumns];
 
+        if (columns.length + 1 < numDesiredColumns) {
+            logger.fine("Number of desired columns does not match! Desired : " + numDesiredColumns
+                    + " actual :" + (columns.length + 1) + ". From line \"" + Concat.concat(columns) + "\". Desired " +
+                    "Columns are"+ System.lineSeparator() + Concat.concat(desiredColumns, "row: ", System.lineSeparator()));
+            return new String[0];
+        }
+
         for (int i = 0; i < numDesiredColumns; i++) {
             values[i] = columns[desiredColumns[i]];
         }
 
         return values;
+    }
+
+    public boolean finish() {
+        return run.close();
     }
 }

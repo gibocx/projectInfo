@@ -4,12 +4,14 @@ import download.actions.DownloadAction;
 import download.actions.DownloadActionFactory;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ActionWrapper {
-    private Map<String, String> action;
+    private final Map<String, String> action = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * Creates a new DownloadAction
+     *
      * @return new DownloadAction
      * @throws IllegalArgumentException when a problem occurs
      */
@@ -18,6 +20,6 @@ public class ActionWrapper {
     }
 
     public void setAction(Map<String, String> action) {
-        this.action = action;
+        this.action.putAll(action);
     }
 }

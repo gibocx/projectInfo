@@ -27,23 +27,4 @@ public class ActionNothing implements DownloadAction {
         return true;
     }
 
-    /**
-     * Performs the init
-     *
-     * @return true when all successful
-     */
-    @Override
-    public boolean init() {
-        return true;
-    }
-
-    /**
-     * Performs the finish
-     *
-     * @return true when all successful
-     */
-    @Override
-    public boolean finish() {
-        return true;
-    }
 }

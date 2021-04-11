@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 public class UpSince implements Runnable {
     private static final TimeDiff time = new TimeDiff();
     private static final Logger logger = Logger.getGlobal();
-    private static Future<UpSince> future;
     private static final int PERIOD_SEC = 300;
+    private static Future<UpSince> future;
 
     /**
      * Schedules the UpSince task when it is not already scheduled every {@value PERIOD_SEC} seconds.

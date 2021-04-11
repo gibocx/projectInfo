@@ -7,10 +7,11 @@ import download.methods.DownloadMethodFactory;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class JobWrapper {
     private String name, description;
-    private Map<String, String> download;
+    private final Map<String, String> download = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Set<String> categories;
     private Set<ActionWrapper> actions;
 
@@ -25,7 +26,7 @@ public class JobWrapper {
 
         actions.toArray(tmp);
 
-        for(ActionWrapper action : tmp) {
+        for (ActionWrapper action : tmp) {
             out.add(action.getAction());
         }
 
@@ -37,7 +38,7 @@ public class JobWrapper {
     }
 
     public void setDownload(Map<String, String> download) {
-        this.download = download;
+        this.download.putAll(download);
     }
 
     public void setName(String name) {

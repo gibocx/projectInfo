@@ -6,17 +6,17 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class HealthCheck implements Runnable {
-    private static Future<HealthCheck> future;
     private static final Logger logger = Logger.getGlobal();
     private static final int MIN_CHECK_TIME_SEC = 1;
     private static final int DEFAULT_CHECK_TIME_SEC = 300;
+    private static Future<HealthCheck> future;
 
     public static void schedule(int period) {
         if (future != null) {
             return;
         }
 
-        if(period < MIN_CHECK_TIME_SEC) {
+        if (period < MIN_CHECK_TIME_SEC) {
             period = MIN_CHECK_TIME_SEC;
         }
 

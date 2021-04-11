@@ -4,10 +4,39 @@ import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
 public class TimeDiff {
-    private long startTime = System.nanoTime();
     private static final DecimalFormat format = new DecimalFormat("#.##");
+    private long startTime = System.nanoTime();
 
     public TimeDiff() {
+    }
+
+    /**
+     * Chooses the best format for given time difference. Rounds to two decimal places e.g. 1.43 ms
+     *
+     * @param diff time difference in nanoseconds
+     * @return elapsed time rounded to two places
+     */
+    public static String chooseBest(long diff) {
+
+        String result;
+
+        if ((diff / Time.ONE_DAY_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_DAY_NS) + " days";
+        } else if ((diff / Time.ONE_HOUR_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_HOUR_NS) + " hours";
+        } else if ((diff / Time.ONE_MIN_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_MIN_NS) + " min";
+        } else if ((diff / Time.ONE_SEC_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_SEC_NS) + " sec";
+        } else if ((diff / Time.ONE_MILLI_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_MILLI_NS) + " ms";
+        } else if ((diff / Time.ONE_MICRO_NS) > 0) {
+            result = format.format((float) diff / Time.ONE_MICRO_NS) + " us";
+        } else {
+            result = diff + " ns";
+        }
+
+        return result;
     }
 
     public void reset() {
@@ -70,35 +99,6 @@ public class TimeDiff {
      */
     public String chooseBest() {
         return chooseBest(getNanos());
-    }
-
-    /**
-     * Chooses the best format for given time difference. Rounds to two decimal places e.g. 1.43 ms
-     *
-     * @param diff time difference in nanoseconds
-     * @return elapsed time rounded to two places
-     */
-    public static String chooseBest(long diff) {
-
-        String result;
-
-        if ((diff / Time.ONE_DAY_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_DAY_NS) + " days";
-        } else if ((diff / Time.ONE_HOUR_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_HOUR_NS) + " hours";
-        } else if ((diff / Time.ONE_MIN_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_MIN_NS) + " min";
-        } else if ((diff / Time.ONE_SEC_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_SEC_NS) + " sec";
-        } else if ((diff / Time.ONE_MILLI_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_MILLI_NS) + " ms";
-        } else if ((diff / Time.ONE_MICRO_NS) > 0) {
-            result = format.format((float)diff / Time.ONE_MICRO_NS) + " us";
-        } else {
-            result = diff + " ns";
-        }
-
-        return result;
     }
 
     /**

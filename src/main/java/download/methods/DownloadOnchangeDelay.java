@@ -4,6 +4,7 @@ import download.Category;
 import download.Download;
 import download.actions.DownloadActions;
 import utility.CalcChecksum;
+import utility.Placeholders;
 import utility.Time;
 
 import java.util.Comparator;
@@ -47,7 +48,7 @@ public class DownloadOnchangeDelay implements DownloadMethod {
 
         for (Category category : categories) {
             if (checkCategory(category)) {
-                byte[] data = Download.downloadByteArray(url.replace("#category#", category.getName()), contentType);
+                byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
 
                 category.setLastDownloaded(Time.getUnixTimestamp());
 

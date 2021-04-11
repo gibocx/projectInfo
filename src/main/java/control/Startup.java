@@ -2,10 +2,10 @@ package control;
 
 import control.executorhandler.ExecutorHandler;
 
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static utility.Time.getDate;
+
 
 public class Startup {
     public static final Logger logger = Logger.getGlobal();
@@ -18,15 +18,20 @@ public class Startup {
     }
 
     public static void main(String[] args) {
-        printSystemProperties();
-        logger.info("Startup at " + getDate());
+        System.out.print("                 _           _   ___        __       \n" +
+                         " _ __  _ __ ___ (_) ___  ___| |_|_ _|_ __  / _| ___  \n" +
+                         "| '_ \\| '__/ _ \\| |/ _ \\/ __| __|| || '_ \\| |_ / _ \\ \n" +
+                         "| |_) | | | (_) | |  __/ (__| |_ | || | | |  _| (_) |\n" +
+                         "| .__/|_|  \\___// |\\___|\\___|\\__|___|_| |_|_|  \\___/ \n" +
+                         "|_|           |__/                                   \n");
 
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+        printSystemProperties();
+
+        logger.info("Startup at " + getDate());
+        System.setProperty("server.port","8080");
 
         ReadConfig.read();
     }
-
 
     public static void shutdown() {
         logger.info("Shutdown at " + getDate());

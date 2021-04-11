@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class DownloadMethodFactory {
     public static DownloadMethod newMethod(Map<String, String> data) {
-        if(data == null) {
+        if (data == null) {
             throw new IllegalArgumentException("data can not be null!");
         } else {
-            if(!data.containsKey("method") || data.get("method") == null) {
+            if (!data.containsKey("method") || data.get("method") == null) {
                 throw new IllegalArgumentException("data does not contain the key \"method\" or is null!");
             }
         }
