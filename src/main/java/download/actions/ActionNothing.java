@@ -7,7 +7,7 @@ import download.Category;
  * Every function returns successful and the
  * Constructor can be constructed with any arguments!
  */
-public class ActionNothing implements DownloadAction {
+class ActionNothing implements DownloadAction {
 
     public ActionNothing() {
     }

@@ -2,7 +2,7 @@ package download.actions;
 
 import download.Category;
 
-public class ActionSaveToFileLimited extends ActionSaveToFile implements DownloadAction {
+class ActionSaveToFileLimited extends ActionSaveToFile implements DownloadAction {
     private final int maxFiles;
 
     public ActionSaveToFileLimited(String path, int maxFiles) {

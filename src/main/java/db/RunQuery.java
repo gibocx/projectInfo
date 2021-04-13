@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class RunQuery {
-    public static final int MAX_BATCH_SIZE = 30;
+    public static final int MAX_BATCH_SIZE = 50;
     private static final Logger logger = Logger.getGlobal();
     private static final boolean CRUDE_SQL_CHECK = true;
     private final Connection con;
@@ -50,7 +50,7 @@ public class RunQuery {
 
             Arrays.stream(warnings).forEach(warn -> builder.append(warn).append(","));
             throw new IllegalArgumentException("SQL-Query : " + sql + " includes at least one invalid keyword "
-                    + builder.toString());
+                    + builder);
         }
     }
 

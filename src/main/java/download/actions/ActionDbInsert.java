@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ActionDbInsert implements DownloadAction {
+class ActionDbInsert implements DownloadAction {
     private static final Logger logger = Logger.getGlobal();
     private final InsertInfo in;
     private InsertDataType insertData;

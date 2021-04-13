@@ -16,11 +16,11 @@ public class Placeholders {
      * <p>
      * Some examples
      * #thread=id# -> current Thread id
-     * #time=dd-M-yyyy_hh-mm-ss# -> current time formattted into the given format
+     * #time=dd-M-yyyy_hh-mm-ss# -> current time formatted into the given format
      * #random# -> random integer
      *
      * @param str string including placeholders
-     * @param cat Categoryname to replace #category#
+     * @param cat Category name to replace #category#
      * @return String with replaced placeholders
      */
     public static String replace(String str, String cat) {
@@ -38,7 +38,7 @@ public class Placeholders {
      * <p>
      * Some examples
      * #thread=id# -> current Thread id
-     * #time=dd-M-yyyy_hh-mm-ss# -> current time formattted into the given format
+     * #time=dd-M-yyyy_hh-mm-ss# -> current time formatted into the given format
      * #random# -> random integer
      *
      * @param str String including placeholders

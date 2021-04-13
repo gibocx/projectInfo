@@ -5,7 +5,7 @@ import download.actions.DownloadActions;
 
 import java.util.Set;
 
-public class DownloadNothing implements DownloadMethod {
+class DownloadNothing implements DownloadMethod {
 
     /**
      * Only runs the provided action

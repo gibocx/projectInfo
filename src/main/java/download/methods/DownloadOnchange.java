@@ -10,7 +10,7 @@ import utility.Time;
 import java.util.Map;
 import java.util.Set;
 
-public class DownloadOnchange implements DownloadMethod {
+class DownloadOnchange implements DownloadMethod {
     private final String url, contentType;
 
     public DownloadOnchange(Map<String, String> data) {

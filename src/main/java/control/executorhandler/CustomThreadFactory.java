@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  * Custom Thread Factory, which names the created Threads according to
- * suppliedName[nThread]. Also it provieds an UncaughtExceptionHandler which
+ * suppliedName[nThread]. Also it provides an UncaughtExceptionHandler which
  * simply logs the uncaught Exceptions
  */
 class CustomThreadFactory implements ThreadFactory {
@@ -17,7 +17,7 @@ class CustomThreadFactory implements ThreadFactory {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             synchronized (this) {
-                logger.log(Level.SEVERE, "Uncaught Throwable in " + t.getName(), e);
+                logger.log(Level.SEVERE, "Uncaught Throwable in " + t.getName() + "!", e);
             }
         }
     };

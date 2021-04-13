@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 public class InsertCSVTest {
     RunQuery run;
-    Map<String, String> data = new HashMap<String, String>();
+    final Map<String, String> data = new HashMap<String, String>();
 
     @Before
     public void before() {
@@ -29,7 +29,6 @@ public class InsertCSVTest {
 
     @Test
     public void action() {
-
         for(int i = 1; i <= 8;i++) {
             data.put("argument"+i,"row"+(9-i));
         }
@@ -40,10 +39,21 @@ public class InsertCSVTest {
         InsertCSV csv = new InsertCSV(in,run);
         csv.insert("1,2,3,4,5,6,7,8,9,10",new Category("test"));
 
-        verify(run, times(1)).add(strs.capture());
 
-        String[] vals = new String[]{"9","8","7","6","5","4","3","2"};
-        Assert.assertArrayEquals(vals,strs.getValue());
+        data.put("query","insert ?;");
+        data.put("dataType","CSV");
+        data.put("schema","schema");
+        data.put("delimiter",";");
+        in = new InsertInfo(data);
+        csv = new InsertCSV(in,run);
+        csv.insert("1;2;3;4;5;6;7;8;9;10",new Category("test"));
+
+        verify(run, times(2)).add(strs.capture());
+
+        String[] values = new String[]{"9","8","7","6","5","4","3","2"};
+
+        Assert.assertArrayEquals(values,strs.getAllValues().get(0));
+        Assert.assertArrayEquals(values,strs.getAllValues().get(1));
     }
 
     @Test(expected = IllegalArgumentException.class)

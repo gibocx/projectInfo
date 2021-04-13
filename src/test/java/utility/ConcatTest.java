@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ConcatTest {
-    private String[] strs = new String[]{"this","is","a","string"};
-    private String strConcat = "thisisastring";
-    private String strConcatBeforeAfter = "BthisABisABaABstringA";
+    private final String[] strs = new String[]{"this","is","a","string"};
+    private final String strConcat = "thisisastring";
+    private final String strConcatBeforeAfter = "BthisABisABaABstringA";
 
-    private int[] ints = {1,2,3,4,5};
-    private String intConcat = "12345";
-    private String intConcatBeforeAfter = "B1AB2AB3AB4AB5A";
+    private final int[] ints = {1,2,3,4,5};
+    private final String intConcat = "12345";
+    private final String intConcatBeforeAfter = "B1AB2AB3AB4AB5A";
 
     @Test
     public void concatStringArr() {
@@ -19,14 +19,14 @@ public class ConcatTest {
 
     @Test
     public void concatStringArrNullOrEmpty() {
-        Assert.assertEquals(null,Concat.concat(null));
-        Assert.assertEquals(null,Concat.concat(null));
+        Assert.assertNull(Concat.concat(null));
+        Assert.assertNull(Concat.concat(null));
     }
 
     @Test
     public void concatObjectBeforeAfterNull() {
-        Assert.assertEquals(null,Concat.concat((Object[])null,null,null));
-        Assert.assertEquals(null,Concat.concat(new Object[0],null,null));
+        Assert.assertNull(Concat.concat((Object[]) null, null, null));
+        Assert.assertNull(Concat.concat(new Object[0], null, null));
 
     }
 
@@ -38,8 +38,8 @@ public class ConcatTest {
 
     @Test
     public void concatObjectBeforeAfterPrimitivesNull() {
-        Assert.assertEquals(null,Concat.concat((int[])null,null,null));
-        Assert.assertEquals(null,Concat.concat(new int[0],null,null));
+        Assert.assertNull(Concat.concat((int[]) null, null, null));
+        Assert.assertNull(Concat.concat(new int[0], null, null));
 
     }
 

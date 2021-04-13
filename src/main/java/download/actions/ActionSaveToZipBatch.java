@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ActionSaveToZipBatch extends ActionSaveToZip {
+class ActionSaveToZipBatch extends ActionSaveToZip {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private ZipOutputStream out;
 

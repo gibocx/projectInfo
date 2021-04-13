@@ -92,7 +92,7 @@ public class ReadConfig {
             if (configFileChecksum == CalcChecksum.checksum(CONFIG_FILE))
                 return false;
         } catch (IOException ex) {
-            logger.log(Level.WARNING, "Unable to compute checksum of the config file " + CONFIG_FILE.toString(), ex);
+            logger.log(Level.WARNING, "Unable to compute checksum of the config file " + CONFIG_FILE, ex);
         }
 
         return forceRead();

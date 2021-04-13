@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContainsTest {
-    private Map<String, String> map = new HashMap<>();
-    private String[] keys = new String[]{"key1","key2","key3"};
-    private String[] substrings = new String[]{"sub","STRING"};
-    private String contains = "contains sub string";
-    private String containsCaseSensitive = "contains sub STRING";
+    private final Map<String, String> map = new HashMap<>();
+    private final String[] keys = new String[]{"key1","key2","key3"};
+    private final String[] substrings = new String[]{"sub","STRING"};
+    private final String contains = "contains sub string";
+    private final String containsCaseSensitive = "contains sub STRING";
 
     @Test
     public void containsAllNullOrEmpty() {
@@ -51,8 +51,8 @@ public class ContainsTest {
         Assert.assertFalse(Contains.containsSubStrings(null,null));
 
         Assert.assertFalse(Contains.containsSubStrings(contains,new String[0]));
-        Assert.assertFalse(Contains.containsSubStrings(new String(),substrings));
-        Assert.assertFalse(Contains.containsSubStrings(new String("   "),substrings));
+        Assert.assertFalse(Contains.containsSubStrings("",substrings));
+        Assert.assertFalse(Contains.containsSubStrings("   ",substrings));
     }
 
     @Test
@@ -70,8 +70,8 @@ public class ContainsTest {
         Assert.assertFalse(Contains.containsSubStringsCaseSensitive(null,null));
 
         Assert.assertFalse(Contains.containsSubStringsCaseSensitive(contains,new String[0]));
-        Assert.assertFalse(Contains.containsSubStringsCaseSensitive(new String(),substrings));
-        Assert.assertFalse(Contains.containsSubStringsCaseSensitive(new String("   "),substrings));
+        Assert.assertFalse(Contains.containsSubStringsCaseSensitive("",substrings));
+        Assert.assertFalse(Contains.containsSubStringsCaseSensitive("   ",substrings));
     }
 
     @Test

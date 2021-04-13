@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ActionSaveToFileTest {
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test(expected = IllegalArgumentException.class)
     public void constructorNull() {

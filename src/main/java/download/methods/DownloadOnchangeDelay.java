@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class DownloadOnchangeDelay implements DownloadMethod {
+class DownloadOnchangeDelay implements DownloadMethod {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final String url, contentType;
     private final long minTimeDifference;

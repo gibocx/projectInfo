@@ -5,7 +5,7 @@ import download.actions.DownloadActions;
 
 import java.util.Set;
 
-public class DownloadProgram implements DownloadMethod {
+class DownloadProgram implements DownloadMethod {
     public boolean download(Set<Category> categories, DownloadActions action) {
 
         return true;

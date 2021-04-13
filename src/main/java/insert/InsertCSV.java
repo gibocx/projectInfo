@@ -4,16 +4,16 @@ package insert;
 import db.RunQuery;
 import download.Category;
 import utility.Concat;
+import utility.Readers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class InsertCSV implements InsertDataType {
-    public static final String COMMA_DELIMITER = ";";
+    // matches the character before the regex only when not enclosed in "
+    private static final String REGEX = "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
     private static final Logger logger = Logger.getGlobal();
+    private String commaDelimiter = ",";
     private final RunQuery run;
     private final int numDesiredColumns;
     private final int[] desiredColumns;
@@ -28,6 +28,17 @@ public class InsertCSV implements InsertDataType {
         }
 
         this.run = run;
+
+        if(in.get("delimiter") != null) {
+            String delimiter = in.get("delimiter");
+
+            if(delimiter.length() == 1) {
+                commaDelimiter = delimiter;
+                logger.fine(() -> "Set CSV comma delimiter to " + delimiter);
+            } else {
+                logger.info(() -> "CSV delimiter has to be one character long! Delimiter was " + delimiter);
+            }
+        }
 
         numDesiredColumns = getNumDesiredColumns(in);
         desiredColumns = new int[numDesiredColumns];
@@ -59,16 +70,13 @@ public class InsertCSV implements InsertDataType {
     }
 
     public boolean insert(String str, Category category) {
-        try (BufferedReader reader = new BufferedReader(new StringReader(str))) {
-            String line = reader.readLine();
-            while (line != null) {
-                // do some magic with line extract interpreter ....
-                run.add(computeValues(line.split(COMMA_DELIMITER)));
-                line = reader.readLine();
-            }
+
+        try {
+
+        Readers.readLineByLine(str, (line) -> {run.add(computeValues(line)); });
 
             run.execute();
-        } catch (IOException | SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -79,10 +87,11 @@ public class InsertCSV implements InsertDataType {
     /**
      * Extract the desired columns and returns them in the desired order
      *
-     * @param columns String array of columns
+     * @param line one line of the csv file
      * @return desired String array of the columns
      */
-    private String[] computeValues(String[] columns) {
+    private String[] computeValues(String line) {
+        String[] columns = line.split(commaDelimiter + REGEX);
         String[] values = new String[numDesiredColumns];
 
         if (columns.length + 1 < numDesiredColumns) {

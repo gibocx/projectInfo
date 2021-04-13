@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Cache<K, V> {
     public static final Long STD_TIME_TO_LIVE_MS = 300000L;
     private Map<K, CacheValue<V>> map;
-    private Long normalTimeToLive;
+    private final Long normalTimeToLive;
 
     public Cache() {
         this(STD_TIME_TO_LIVE_MS);
@@ -53,7 +53,7 @@ public class Cache<K, V> {
             remove(key);
         }
 
-        map.put(key, new CacheValue<V>(value,timeToLive));
+        map.put(key, new CacheValue<V>(value, timeToLive));
     }
 
     public void put(K key, V value) {
@@ -74,9 +74,9 @@ public class Cache<K, V> {
         return (map.get(key).validUntil() < Instant.now().toEpochMilli());
     }
 
-    private class CacheValue<V> {
-        private V value;
-        private long validUntil;
+    private static class CacheValue<V> {
+        private final V value;
+        private final long validUntil;
 
         /**
          * @param value Object to store
@@ -89,7 +89,7 @@ public class Cache<K, V> {
 
         protected V getValue() {
             return value;
-        };
+        }
 
         protected long validUntil() {
             return validUntil;

@@ -71,7 +71,7 @@ public class ConfigWrapper {
     /**
      * Returns true only when configReload matches "yes" or "YES"
      *
-     * @return true only when automactic config reload is required
+     * @return true only when automatic config reload is required
      */
     public boolean isAutomaticReload() {
         if (configReload == null)

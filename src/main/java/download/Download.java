@@ -1,7 +1,6 @@
 package download;
 
 import org.apache.commons.text.StringEscapeUtils;
-import utility.Placeholders;
 import utility.TimeDiff;
 
 import java.io.*;

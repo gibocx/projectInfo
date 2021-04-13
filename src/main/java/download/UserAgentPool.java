@@ -3,11 +3,10 @@ package download;
 import control.executorhandler.ExecutorHandler;
 import utility.CalcChecksum;
 import utility.FileStuff;
+import utility.Readers;
 import utility.ThreadRandom;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
@@ -33,15 +32,6 @@ public class UserAgentPool {
         return agents.size();
     }
 
-    private static void readAgentsFromPlaintext(File file) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(file));
-
-        String line;
-        while ((line = br.readLine()) != null) {
-            addAgent(line);
-        }
-    }
-
     /**
      * Reads agents from the given file. It overwrites the before configured agents. If a
      * problem occurs the agent list gets rolled back.
@@ -59,7 +49,7 @@ public class UserAgentPool {
                 if (userAgentFileChecksum != CalcChecksum.checksum(file)) {
                     switch (dataFormat) {
                         case PLAINTEXT:
-                            readAgentsFromPlaintext(file);
+                            Readers.readLineByLine(file,(str) -> UserAgentPool.addAgent(str));
                             break;
 
                         case NONE:
@@ -145,7 +135,7 @@ public class UserAgentPool {
     }
 
     /**
-     * Scheduls the UserAgentPool at the specified rate. When the reload period is
+     * Schedules the UserAgentPool at the specified rate. When the reload period is
      * 0 the reload is canceled.
      *
      * @param reloadPeriod Rate at which the reload is performed

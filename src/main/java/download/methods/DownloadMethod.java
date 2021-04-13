@@ -19,5 +19,5 @@ public interface DownloadMethod {
      */
     default boolean check(Set<Category> categories) {
         return true;
-    };
+    }
 }

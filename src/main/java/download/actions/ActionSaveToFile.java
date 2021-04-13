@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class ActionSaveToFile implements DownloadAction {
+class ActionSaveToFile implements DownloadAction {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final String path;
 

@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ActionSaveToZip extends ActionSaveToFile {
+class ActionSaveToZip extends ActionSaveToFile {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final String zipEntryName;
 

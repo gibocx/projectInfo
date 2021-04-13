@@ -20,7 +20,7 @@ public interface DownloadAction {
      */
     default boolean init() {
         return true;
-    };
+    }
 
     /**
      * Performs the finish
@@ -29,6 +29,6 @@ public interface DownloadAction {
      */
     default boolean finish() {
         return true;
-    };
+    }
 
 }

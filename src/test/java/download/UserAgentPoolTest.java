@@ -118,7 +118,7 @@ public class UserAgentPoolTest {
         Assert.assertFalse(UserAgentPool.readAgentsFromFile(invalid));
         Assert.assertEquals(5,UserAgentPool.getPoolSize());
 
-        Assert.assertFalse(UserAgentPool.readAgentsFromFile((File)null));
+        Assert.assertFalse(UserAgentPool.readAgentsFromFile(null));
         Assert.assertEquals(5,UserAgentPool.getPoolSize());
     }
 
@@ -132,7 +132,7 @@ public class UserAgentPoolTest {
         Assert.assertEquals(5,UserAgentPool.getPoolSize());
         UserAgentPool.clear();
 
-        Assert.assertFalse(UserAgentPool.setUserAgentFile((File)null));
+        Assert.assertFalse(UserAgentPool.setUserAgentFile(null));
         Assert.assertFalse(UserAgentPool.setUserAgentFile(invalid));
     }
 
