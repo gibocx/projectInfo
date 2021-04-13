@@ -19,9 +19,14 @@
         <maven.compiler.target>10</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
+  <sonar.projectKey>gibocx_projectInfo</sonar.projectKey>
+  <sonar.organization>gibocx</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+         </properties>
+         
     <dependencies>
+             
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
@@ -82,7 +87,11 @@
     </dependencies>
     <build>
         <plugins>
-
+             <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>3.0.2</version>
+</plugin>
         </plugins>
     </build>
 
