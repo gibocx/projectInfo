@@ -4,9 +4,9 @@ import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 public class ExecutorHandler {
-    static final Logger logger = Logger.getGlobal();
-    private static final int STD_NUM_THREADS = 1;
-    private static final long SHUTDOWN_GRACE_TIME = 10000;
+    private static final Logger logger = Logger.getGlobal();
+    public static final int STD_NUM_THREADS = 1;
+    public static final long SHUTDOWN_GRACE_TIME = 10000;
     private static int submittedJobs = 0;
     private static ExecutorService executor;
     private static ScheduledThreadPoolExecutor scheduledExecutor;

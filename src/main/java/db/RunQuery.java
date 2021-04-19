@@ -1,5 +1,6 @@
 package db;
 
+import utility.Concat;
 import utility.Contains;
 
 import java.sql.Connection;
@@ -18,8 +19,8 @@ public class RunQuery {
     private final int parameterCount;
     private int batchSize = 0;
 
-    public RunQuery(String sql, Connection con) {
-        this.con = con;
+    public RunQuery(String sql, String schema) {
+        this.con = Connect.getConnection(schema);
 
         if (CRUDE_SQL_CHECK) {
             checkQuery(sql);
@@ -44,13 +45,9 @@ public class RunQuery {
     private void checkQuery(String sql) {
         String[] warnings = {" delete ", " alter ", " update ", " drop "};
 
-
         if (Contains.containsSubStrings(sql, warnings)) {
-            StringBuilder builder = new StringBuilder();
-
-            Arrays.stream(warnings).forEach(warn -> builder.append(warn).append(","));
             throw new IllegalArgumentException("SQL-Query : " + sql + " includes at least one invalid keyword "
-                    + builder);
+                    + Concat.concat(warnings));
         }
     }
 
@@ -79,10 +76,9 @@ public class RunQuery {
                     batchSize = 0;
                 }
             } else {
-                logger.info("No matching Parameter sizes requested arguments :" + parameterCount
+                logger.fine("No matching Parameter sizes requested arguments :" + parameterCount
                         + " actual arguments: " + args+1);
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -91,9 +87,13 @@ public class RunQuery {
         return true;
     }
 
-    public boolean execute() throws SQLException {
-        statement.executeBatch();
-        con.commit();
+    public boolean execute() {
+        try {
+            statement.executeBatch();
+            con.commit();
+        } catch(SQLException ex) {
+            return false;
+        }
 
         return true;
     }

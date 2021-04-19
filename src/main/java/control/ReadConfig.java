@@ -79,6 +79,7 @@ public class ReadConfig {
 
         logger.info(() -> "Config Reload took " + time.chooseBest());
         logger.info(() -> "Reloaded Config. checksum = " + configFileChecksum);
+
         return true;
     }
 

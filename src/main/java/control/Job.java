@@ -3,7 +3,6 @@ package control;
 import control.executorhandler.ExecutorHandler;
 import download.Category;
 import download.Downloadable;
-import download.actions.DownloadAction;
 import download.actions.DownloadActions;
 import download.methods.DownloadMethod;
 
@@ -16,10 +15,10 @@ public class Job {
     private static final Logger logger = Logger.getGlobal();
     private final String name, description;
     private final DownloadMethod method;
-    private final Set<DownloadAction> actions;
+    private final DownloadActions actions;
     private final Set<Category> categories = new HashSet<>();
 
-    public Job(String name, String description, DownloadMethod method, Set<DownloadAction> actions, Set<String> categories) {
+    public Job(String name, String description, DownloadMethod method, DownloadActions actions, Set<String> categories) {
         if (method == null)
             throw new IllegalArgumentException("DownloadMethod method can not be null!");
 
@@ -61,7 +60,7 @@ public class Job {
      * Submits a new Downloadable from this Job for execution
      */
     public void submit() {
-        ExecutorHandler.submit(new Downloadable(method, new DownloadActions(actions), categories));
+        ExecutorHandler.submit(new Downloadable(method, actions, categories));
     }
 
     /**

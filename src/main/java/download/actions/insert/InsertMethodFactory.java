@@ -1,4 +1,4 @@
-package insert;
+package download.actions.insert;
 
 import db.RunQuery;
 
@@ -13,7 +13,7 @@ public class InsertMethodFactory {
         }
 
         try {
-            Class<?> clazz = Class.forName("insert.Insert" + in.getDataType());
+            Class<?> clazz = Class.forName("download.actions.insert.Insert" + in.getDataType());
             return (InsertDataType) clazz.getConstructor(InsertInfo.class, RunQuery.class).newInstance(in, run);
         } catch (ClassNotFoundException ex) {
             throw new IllegalArgumentException(in.getDataType() + " is not valid InsertDataType!");

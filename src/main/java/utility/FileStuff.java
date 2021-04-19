@@ -1,6 +1,7 @@
 package utility;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class FileStuff {

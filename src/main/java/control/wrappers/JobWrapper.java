@@ -2,6 +2,7 @@ package control.wrappers;
 
 import control.Job;
 import download.actions.DownloadAction;
+import download.actions.DownloadActions;
 import download.methods.DownloadMethodFactory;
 
 import java.util.HashSet;
@@ -17,20 +18,17 @@ public class JobWrapper {
 
     Job toJob() {
         return new Job(name, description, DownloadMethodFactory.newMethod(download),
-                computeActions(), categories);
+                getDownloadActions(), categories);
     }
 
-    private Set<DownloadAction> computeActions() {
-        ActionWrapper[] tmp = new ActionWrapper[actions.size()];
+    private DownloadActions getDownloadActions() {
         Set<DownloadAction> out = new HashSet<>();
 
-        actions.toArray(tmp);
-
-        for (ActionWrapper action : tmp) {
+        for (ActionWrapper action : actions) {
             out.add(action.getAction());
         }
 
-        return out;
+        return new DownloadActions(out);
     }
 
     private void setActions(Set<ActionWrapper> actions) {

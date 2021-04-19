@@ -2,6 +2,7 @@ package control;
 
 import control.executorhandler.ExecutorHandler;
 
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static utility.Time.getDate;
@@ -26,9 +27,7 @@ public class Startup {
                          "|_|           |__/                                   \n");
 
         printSystemProperties();
-
         logger.info("Startup at " + getDate());
-        System.setProperty("server.port","8080");
 
         ReadConfig.read();
     }

@@ -35,7 +35,7 @@ public class Cache<K, V> {
     }
 
     public void clear() {
-        map = new HashMap<>();
+        map.clear();
     }
 
     public Optional<V> get(K key) {
@@ -53,7 +53,7 @@ public class Cache<K, V> {
             remove(key);
         }
 
-        map.put(key, new CacheValue<V>(value, timeToLive));
+        map.put(key, new CacheValue<>(value, timeToLive));
     }
 
     public void put(K key, V value) {

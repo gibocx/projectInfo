@@ -1,4 +1,4 @@
-package insert;
+package download.actions.insert;
 
 import download.Category;
 

@@ -1,4 +1,4 @@
-package insert;
+package download.actions.insert;
 
 import db.RunQuery;
 import download.Category;
@@ -15,14 +15,14 @@ import static org.mockito.Mockito.*;
 
 public class InsertCSVTest {
     RunQuery run;
-    final Map<String, String> data = new HashMap<String, String>();
+    final Map<String, String> data = new HashMap<>();
 
     @Before
     public void before() {
         run = Mockito.mock(RunQuery.class);
         Mockito.when(run.add(any(String[].class))).thenReturn(true);
 
-        data.put("query","insert ?;");
+        data.put("query","download.actions.insert ?;");
         data.put("dataType","CSV");
         data.put("schema","schema");
     }
@@ -40,7 +40,7 @@ public class InsertCSVTest {
         csv.insert("1,2,3,4,5,6,7,8,9,10",new Category("test"));
 
 
-        data.put("query","insert ?;");
+        data.put("query","download.actions.insert ?;");
         data.put("dataType","CSV");
         data.put("schema","schema");
         data.put("delimiter",";");

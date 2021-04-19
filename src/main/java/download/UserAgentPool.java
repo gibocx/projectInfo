@@ -49,7 +49,7 @@ public class UserAgentPool {
                 if (userAgentFileChecksum != CalcChecksum.checksum(file)) {
                     switch (dataFormat) {
                         case PLAINTEXT:
-                            Readers.readLineByLine(file,(str) -> UserAgentPool.addAgent(str));
+                            Readers.readLineByLine(file, UserAgentPool::addAgent);
                             break;
 
                         case NONE:

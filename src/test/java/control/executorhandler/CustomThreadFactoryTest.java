@@ -13,7 +13,7 @@ public class CustomThreadFactoryTest {
 
         for(int i = 1; i <= 5; i++) {
             Assert.assertEquals("valid["+i+"]",
-                    threadFactory.newThread(null).getName());
+                    threadFactory.newThread(() -> {}).getName());
         }
     }
 }

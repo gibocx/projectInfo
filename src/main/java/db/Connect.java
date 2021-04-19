@@ -42,9 +42,38 @@ public class Connect {
                 source = tmp;
             }
 
-            logger.info("Successfully set new Datasource!");
-        } catch(PropertyVetoException e) {
-            logger.log(Level.INFO,"YES",e);
+            if(isAvailable()) {
+                logger.info("Successfully set new Datasource!");
+            } else {
+                stop();
+            }
+
+        } catch(PropertyVetoException ex) {
+            logger.log(Level.INFO,"YES",ex);
+        }
+    }
+
+    /**
+     * Checks the connection
+     * @return true when connection is connected
+     */
+    public static boolean isAvailable() {
+        try {
+            source.getConnection().createStatement().execute("SELECT 1;");
+            return true;
+        } catch (SQLException | NullPointerException ex) {
+            logger.log(Level.FINE,"Problems with connection!", ex);
+            return false;
+        }
+    }
+
+    public static boolean isActive(Connection con) {
+        try {
+            con.createStatement().execute("SELECT 1");
+            return true;
+        } catch (SQLException | NullPointerException ex) {
+            logger.log(Level.FINE,"Problems with connection!", ex);
+            return false;
         }
     }
 
@@ -97,7 +126,7 @@ public class Connect {
             con.setCatalog(schema);
             return con;
         } catch (SQLException ex) {
-            logger.warning("unable to get connection : " + ex.getMessage() + " " + ex.getSQLState());
+            logger.warning("unable to get connection : " + ex.getMessage());
         }
 
         return null;
@@ -107,7 +136,7 @@ public class Connect {
         try {
             con.close();
         } catch (SQLException ex) {
-            logger.info("unable to close connection " + ex.getMessage() + " " + ex.getSQLState());
+            logger.info("unable to close connection " + ex.getMessage());
         }
     }
 }

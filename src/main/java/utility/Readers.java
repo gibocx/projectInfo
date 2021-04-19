@@ -20,6 +20,10 @@ public class Readers {
     }
 
     private static void readLineByLine(Reader r, Consumer<String> func) {
+        if(func == null) {
+            return;
+        }
+
         try (BufferedReader br = new BufferedReader(r)) {
             String line;
 

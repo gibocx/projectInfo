@@ -1,4 +1,4 @@
-package insert;
+package download.actions.insert;
 
 
 import db.RunQuery;
@@ -6,10 +6,9 @@ import download.Category;
 import utility.Concat;
 import utility.Readers;
 
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class InsertCSV implements InsertDataType {
+class InsertCSV implements InsertDataType {
     // matches the character before the regex only when not enclosed in "
     private static final String REGEX = "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
     private static final Logger logger = Logger.getGlobal();
@@ -70,18 +69,8 @@ public class InsertCSV implements InsertDataType {
     }
 
     public boolean insert(String str, Category category) {
-
-        try {
-
-        Readers.readLineByLine(str, (line) -> {run.add(computeValues(line)); });
-
-            run.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-
-        return true;
+        Readers.readLineByLine(str, (line) -> run.add(computeValues(line)));
+        return run.execute();
     }
 
     /**
