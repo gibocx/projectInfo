@@ -1,5 +1,6 @@
 package download.actions;
 
+import control.wrappers.ActionWrapper;
 import download.Category;
 import utility.FileStuff;
 import utility.Placeholders;
@@ -26,6 +27,10 @@ class ActionSaveToZip extends ActionSaveToFile {
         if (!file.endsWith(".zip")) {
             logger.warning(() -> "Zip entry does not end in .zip! " + zipEntryName);
         }
+    }
+
+    public ActionSaveToZip(ActionWrapper action) {
+        this(action.getNullable("file"),action.getNullable("zipEntryName"));
     }
 
     @Override

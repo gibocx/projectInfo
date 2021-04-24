@@ -2,7 +2,9 @@ package control;
 
 import control.executorhandler.ExecutorHandler;
 
-import java.util.Scanner;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import static utility.Time.getDate;
@@ -13,7 +15,7 @@ public class Startup {
     private static final String VERSION = "0.0.1";
 
     public static void printSystemProperties() {
-        System.out.println("Project info Version: " + VERSION);
+        System.out.println("ProjectInfo Version: " + VERSION);
         System.out.println("Runtime version: " + Runtime.version());
         System.out.println("Available Processors: " + Runtime.getRuntime().availableProcessors());
     }

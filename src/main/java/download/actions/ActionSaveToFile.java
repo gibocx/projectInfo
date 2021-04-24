@@ -1,5 +1,6 @@
 package download.actions;
 
+import control.wrappers.ActionWrapper;
 import download.Category;
 import utility.FileStuff;
 import utility.Placeholders;
@@ -18,6 +19,10 @@ class ActionSaveToFile implements DownloadAction {
         } else {
             throw new IllegalArgumentException("filePath can not be empty!");
         }
+    }
+
+    public ActionSaveToFile(ActionWrapper action) {
+        this(action.getNullable("path"));
     }
 
     public boolean action(byte[] data, Category category) {

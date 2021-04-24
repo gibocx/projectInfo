@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
@@ -19,40 +20,40 @@ public class CalcChecksum {
      * Computes the checksum of a byte array
      *
      * @param bytes Byte[] to compute the checksum of
-     * @return checksum as long, 0 when null!
+     * @return checksum as long
      */
     public static long checksum(byte[] bytes) {
         if (bytes != null) {
-            Checksum sum = new Adler32();
-            sum.update(bytes, 0, bytes.length);
-            return sum.getValue();
-        } else {
-            return 0;
+            bytes = new byte[0];
         }
+
+        Checksum sum = new Adler32();
+        sum.update(bytes, 0, bytes.length);
+        return sum.getValue();
     }
 
     /**
      * Computes the checksum of a String
      *
      * @param str String to compute the checksum of
-     * @return checksum as long, 0 when null!
+     * @return checksum as long
      */
     public static long checksum(String str) {
         if (str != null) {
-            return checksum(str.getBytes(StandardCharsets.UTF_8));
-        } else {
-            return 0;
+            str = "";
         }
+
+        return checksum(str.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
      * Computes the checksum of a File
-     *
+     * When an Exception occurs or the filename is invalid the same
+     * arbitrary value is returned.
      * @param file File to compute the checksum of
-     * @return checksum as long, 0 when file is null!
-     * @throws IOException when unable to read file
+     * @return checksum as long
      */
-    public static long checksum(File file) throws IOException {
+    public static long checksum(File file) {
         if (isValid(file)) {
             Checksum sum = new Adler32();
             byte[] buffer = new byte[BUFFER_SIZE];
@@ -64,11 +65,12 @@ public class CalcChecksum {
                     bytesRead = input.read(buffer);
                 }
             } catch (IOException ex) {
-                throw new IOException(ex.getCause());
+                logger.log(Level.FINE,"IOException!",ex);
+                return checksum((String)null);
             }
             return sum.getValue();
         }
-        return 0;
-    }
 
+        return checksum((String)null);
+    }
 }

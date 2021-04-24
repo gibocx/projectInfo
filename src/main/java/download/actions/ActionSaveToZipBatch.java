@@ -1,12 +1,12 @@
 package download.actions;
 
+import control.wrappers.ActionWrapper;
 import download.Category;
 import utility.FileStuff;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -20,8 +20,8 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
 
     }
 
-    public ActionSaveToZipBatch(Map<String, String> data) {
-        super(data.get("filePath"), data.get("zipEntryName"));
+    public ActionSaveToZipBatch(ActionWrapper action) {
+        super(action.getNullable("filePath"), action.getNullable("zipEntryName"));
     }
 
     @Override

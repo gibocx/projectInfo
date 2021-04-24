@@ -1,22 +1,23 @@
 package download.actions;
 
-import java.util.Map;
+import control.wrappers.ActionWrapper;
+
 
 public class DownloadActionFactory {
-    public static DownloadAction newAction(Map<String, String> data) {
-        if (data == null) {
-            throw new IllegalArgumentException("data can not be null!");
+    public static DownloadAction newAction(ActionWrapper action) {
+        if (action == null) {
+            throw new IllegalArgumentException("ActionWrapper can not be null!");
         } else {
-            if (!data.containsKey("action") || data.get("action") == null) {
-                throw new IllegalArgumentException("data does not contain the key \"action\" or is null!");
+            if (action.getName() == null || action.getName().trim().isEmpty()) {
+                throw new IllegalArgumentException("ActionName can not be null or empty!");
             }
         }
 
         try {
-            Class<?> clazz = Class.forName("download.actions.Action" + data.get("action"));
-            return (DownloadAction) clazz.getConstructor(Map.class).newInstance(data);
+            Class<?> clazz = Class.forName("download.actions.Action" + action.getName());
+            return (DownloadAction) clazz.getConstructor(ActionWrapper.class).newInstance(action);
         } catch (ClassNotFoundException ex) {
-            throw new IllegalArgumentException(data.get("action") + " is not valid DownloadAction!");
+            throw new IllegalArgumentException(action.getName() + " is not valid DownloadAction!");
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex);
         }

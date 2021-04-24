@@ -9,16 +9,15 @@ public class FileStuff {
 
     public static boolean isValid(File file) {
         if (file != null) {
-            return file.exists() && file.isFile();
-        } else {
-            logger.fine("Supplied File is null!!");
+            return (file.exists() && file.isFile());
         }
+
         return false;
     }
 
-    public static boolean isValid(String file) {
-        if (file != null) {
-            File tmp = new File(file);
+    public static boolean isValid(String path) {
+        if (path != null) {
+            File tmp = new File(path);
             return isValid(tmp);
         }
 
@@ -32,15 +31,14 @@ public class FileStuff {
      * @return true only when created successful
      */
     public static boolean createFile(File file) {
-        if (!isValid(file) && file != null) {
+        if (file != null && !isValid(file)) {
             try {
                 return file.createNewFile();
             } catch (IOException | SecurityException ex) {
                 logger.fine("Could not create file " + file.getName() + " Exception " + ex.getMessage());
             }
-        } else {
-            logger.fine("File already exists or null!");
         }
+
         return false;
     }
 

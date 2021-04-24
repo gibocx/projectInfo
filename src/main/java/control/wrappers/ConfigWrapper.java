@@ -3,21 +3,16 @@ package control.wrappers;
 import control.Job;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConfigWrapper {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private String configReload;
-    private int checkIntervals;
-    private int checkConfigReload;
-    private int executorThreads;
-    private int scheduledThreads;
-    private final Map<String, String> db = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private int checkIntervals, checkConfigReload, executorThreads, scheduledThreads;
     private GeneralDownloadWrapper download;
+    private DatabaseWrapper database;
     private Set<JobWrapper> jobs;
 
     public void setConfigReload(String configReload) {
@@ -37,12 +32,12 @@ public class ConfigWrapper {
         this.checkIntervals = checkIntervals;
     }
 
-    public Map<String, String> getDb() {
-        return db;
+    public DatabaseWrapper getDb() {
+        return database;
     }
 
-    public void setDb(Map<String, String> db) {
-        this.db.putAll(db);
+    public void setDatabase(DatabaseWrapper database) {
+        this.database = database;
     }
 
     /**

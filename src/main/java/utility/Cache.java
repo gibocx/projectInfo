@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Cache<K, V> {
     public static final Long STD_TIME_TO_LIVE_MS = 300000L;
-    private Map<K, CacheValue<V>> map;
+    private Map<K, CacheValue<V>> map = new HashMap<>();
     private final Long normalTimeToLive;
 
     public Cache() {
@@ -21,7 +21,6 @@ public class Cache<K, V> {
      */
     public Cache(Long normalTimeToLive) {
         this.normalTimeToLive = normalTimeToLive;
-        this.clear();
     }
 
     public void clean() {

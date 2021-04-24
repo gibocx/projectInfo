@@ -15,6 +15,7 @@ public class JobWrapper {
     private final Map<String, String> download = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Set<String> categories;
     private Set<ActionWrapper> actions;
+    private PreActionWrapper preAction;
 
     Job toJob() {
         return new Job(name, description, DownloadMethodFactory.newMethod(download),
@@ -49,5 +50,9 @@ public class JobWrapper {
 
     public void setCategories(Set<String> categories) {
         this.categories = categories;
+    }
+
+    public void setPreAction(PreActionWrapper preAction) {
+        this.preAction = preAction;
     }
 }

@@ -1,24 +1,22 @@
 package download.preactions;
 
-import download.actions.DownloadAction;
-
-import java.util.Map;
+import control.wrappers.PreActionWrapper;
 
 public class PreActionFactory {
-    public static PreAction newAction(Map<String, String> data) {
-        if (data == null) {
-            throw new IllegalArgumentException("data can not be null!");
+    public static PreAction newAction(PreActionWrapper pre) {
+        if (pre == null) {
+            throw new IllegalArgumentException("PreActionWrapper can not be null!");
         } else {
-            if (!data.containsKey("action") || data.get("action") == null) {
-                throw new IllegalArgumentException("data does not contain the key \"action\" or is null!");
+            if (pre.getName() == null || pre.getName().trim().isEmpty()) {
+                throw new IllegalArgumentException("PreActionName can not be null or empty");
             }
         }
 
         try {
-            Class<?> clazz = Class.forName("download.preactions.PreAction" + data.get("action"));
-            return (PreAction) clazz.getConstructor(Map.class).newInstance(data);
+            Class<?> clazz = Class.forName("download.preactions.PreAction" + pre.getName());
+            return (PreAction) clazz.getConstructor(PreActionWrapper.class).newInstance(pre);
         } catch (ClassNotFoundException ex) {
-            throw new IllegalArgumentException(data.get("action") + " is not valid PreAction!");
+            throw new IllegalArgumentException(pre.getName() + " is not valid PreAction!");
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex);
         }

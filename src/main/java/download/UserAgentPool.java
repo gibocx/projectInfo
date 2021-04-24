@@ -7,7 +7,6 @@ import utility.Readers;
 import utility.ThreadRandom;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
@@ -45,35 +44,27 @@ public class UserAgentPool {
             ArrayList<String> tmp = new ArrayList<>(agents);
             agents.clear();
 
-            try {
-                if (userAgentFileChecksum != CalcChecksum.checksum(file)) {
-                    switch (dataFormat) {
-                        case PLAINTEXT:
-                            Readers.readLineByLine(file, UserAgentPool::addAgent);
-                            break;
+            if (userAgentFileChecksum != CalcChecksum.checksum(file)) {
+                switch (dataFormat) {
+                    case PLAINTEXT:
+                        Readers.readLineByLine(file, UserAgentPool::addAgent);
+                        break;
 
-                        case NONE:
-                            break;
-                        default:
-                            logger.warning(() -> "Unknown UserAgentPool dataFormat " + dataFormat);
-                            // rollback to before read
-                            agents = tmp;
-                            return false;
-                    }
-
-                    logger.fine("Loaded new UserAgents. Currently loaded : " + agents.size());
-                } else {
-                    logger.fine("No reload of UserAgentFile! Same Checksum!");
+                    case NONE:
+                        break;
+                    default:
+                        logger.warning(() -> "Unknown UserAgentPool dataFormat " + dataFormat);
+                        // rollback to before read
+                        agents = tmp;
+                        return false;
                 }
 
-                return true;
-            } catch (IOException ex) {
-                logger.info("IOException while trying to read userAgents from file " + file.toString()
-                        + " Exception :" + ex.getMessage() + "; Number of UserAgents : " + getPoolSize());
-
-                // rollback to before read
-                agents = tmp;
+                logger.fine("Loaded new UserAgents. Currently loaded : " + agents.size());
+            } else {
+                logger.fine("No reload of UserAgentFile! Same Checksum!");
             }
+
+            return true;
 
         }
 

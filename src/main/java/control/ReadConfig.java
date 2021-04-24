@@ -37,6 +37,7 @@ public class ReadConfig {
      */
     public static boolean forceRead() {
         TimeDiff time = new TimeDiff();
+
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         try {
@@ -47,8 +48,7 @@ public class ReadConfig {
             ExecutorHandler.startExecutor(config.getExecutorThreads());
             ExecutorHandler.startScheduledExecutor(config.getScheduledThreads());
 
-            automaticReload = config.isAutomaticReload();
-            if (automaticReload) {
+            if (config.isAutomaticReload()) {
                 CheckForReload.schedule(config.getCheckConfigReload());
             } else {
                 CheckForReload.cancel();
@@ -65,17 +65,11 @@ public class ReadConfig {
             UpSince.schedule();
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to completely parse config ", e);
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Unable to completely reload!", e);
             return false;
         }
 
-        try {
-            configFileChecksum = CalcChecksum.checksum(CONFIG_FILE);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
+        configFileChecksum = CalcChecksum.checksum(CONFIG_FILE);
 
         logger.info(() -> "Config Reload took " + time.chooseBest());
         logger.info(() -> "Reloaded Config. checksum = " + configFileChecksum);
@@ -89,12 +83,8 @@ public class ReadConfig {
      * @return true only when read
      */
     public static boolean read() {
-        try {
-            if (configFileChecksum == CalcChecksum.checksum(CONFIG_FILE))
-                return false;
-        } catch (IOException ex) {
-            logger.log(Level.WARNING, "Unable to compute checksum of the config file " + CONFIG_FILE, ex);
-        }
+        if (configFileChecksum == CalcChecksum.checksum(CONFIG_FILE))
+            return false;
 
         return forceRead();
     }

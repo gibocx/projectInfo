@@ -1,13 +1,16 @@
 package download.preactions;
 
+import control.wrappers.PreActionWrapper;
 import utility.Contains;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 class PreActionRemoveLines implements PreAction {
+    private static final Logger logger = Logger.getGlobal();
     private int[] linesToRemove;
 
     /**
@@ -19,8 +22,11 @@ class PreActionRemoveLines implements PreAction {
         this.linesToRemove = linesToRemove;
     }
 
-    public PreActionRemoveLines() {
+    public PreActionRemoveLines(PreActionWrapper pre) {
+        linesToRemove = pre.getRows();
+    }
 
+    public PreActionRemoveLines() {
     }
 
     /**
@@ -30,6 +36,7 @@ class PreActionRemoveLines implements PreAction {
     @Override
     public byte[] compute(byte[] data) {
         if (linesToRemove.length == 0) {
+            logger.fine("No lines to remove!");
             return data;
         }
 

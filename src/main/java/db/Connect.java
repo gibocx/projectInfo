@@ -1,13 +1,12 @@
 package db;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import control.wrappers.DatabaseWrapper;
 import utility.Concat;
-import utility.Contains;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,9 +14,9 @@ public class Connect {
     private static final Logger logger = Logger.getGlobal();
     private static ComboPooledDataSource source;
 
-    public static void start(Map<String, String> data) {
+    public static void start(DatabaseWrapper db) {
         String[] reqArgs = new String[]{"jdbcurl", "user", "password"};
-        if (!Contains.containsAll(data, reqArgs)) {
+        if (!db.isValid()) {
             logger.info("Provided map does at least not contain one of the following values "
                     + Concat.concat(reqArgs,null,";"));
 
@@ -27,9 +26,9 @@ public class Connect {
 
         try {
             ComboPooledDataSource tmp = new ComboPooledDataSource();
-            tmp.setJdbcUrl(data.get("jdbcurl"));
-            tmp.setUser(data.get("user"));
-            tmp.setPassword(data.get("password"));
+            tmp.setJdbcUrl(db.getJdbcUrl());
+            tmp.setUser(db.getUser());
+            tmp.setPassword(db.getPassword());
             tmp.setDriverClass("com.mysql.cj.jdbc.Driver");
 
             // Optional Settings

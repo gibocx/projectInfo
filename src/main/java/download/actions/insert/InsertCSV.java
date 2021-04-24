@@ -55,8 +55,12 @@ class InsertCSV implements InsertDataType {
                 i++;
             }
         } catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("Can not parse number from " + tmp
-                    + "in argument" + i + "; " + tmp.split("row")[1] + " is not a valid number!");
+            if(tmp != null || tmp.isEmpty()) {
+                throw new IllegalArgumentException("Can not parse number from " + tmp
+                        + "in argument" + i + "; " + tmp.split("row")[1] + " is not a valid number!");
+            } else {
+                throw new IllegalArgumentException("Can not parse number. Argument" + i + " is null or empty!");
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package download.actions;
 
+import control.wrappers.ActionWrapper;
 import download.Category;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -13,8 +14,13 @@ public class ActionSaveToFileTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorNull() {
-        DownloadAction action = new ActionSaveToFile(null);
+    public void constructorNullString() {
+        DownloadAction action = new ActionSaveToFile((String) null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void constructorInvalidString() {
+        DownloadAction action = new ActionSaveToFile("  ");
     }
 
     @Test(expected = IllegalArgumentException.class)

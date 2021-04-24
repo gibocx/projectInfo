@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class RunQuery {
@@ -43,7 +42,7 @@ public class RunQuery {
     }
 
     private void checkQuery(String sql) {
-        String[] warnings = {" delete ", " alter ", " update ", " drop "};
+        String[] warnings = {"delete ", "alter ", "update ", "drop "};
 
         if (Contains.containsSubStrings(sql, warnings)) {
             throw new IllegalArgumentException("SQL-Query : " + sql + " includes at least one invalid keyword "
