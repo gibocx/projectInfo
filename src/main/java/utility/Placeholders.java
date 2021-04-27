@@ -59,8 +59,7 @@ public class Placeholders {
             switch (m.group().split("=")[0].toUpperCase()) {
                 case "TIME":
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(m.group().split("=")[1]);
-                    String toReplace = Time.curDateTime().format(formatter);
-                    str = str.replace("#" + m.group() + "#", toReplace);
+                    str = str.replace("#" + m.group() + "#", Time.curDateTime().format(formatter));
                     break;
                 case "THREAD":
                     str = str.replace("#" + m.group() + "#", threadInfo(m.group().split("=")[1]));

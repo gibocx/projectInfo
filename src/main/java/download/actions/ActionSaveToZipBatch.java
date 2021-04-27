@@ -7,6 +7,7 @@ import utility.FileStuff;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -52,8 +53,8 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
             } else {
                 logger.warning(() -> "unable to create file with path " + filePath);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            logger.log(Level.WARNING,"Should have created File but could not find file " + filePath,ex);
         }
 
         return false;
@@ -61,11 +62,13 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
 
     @Override
     public boolean finish() {
+
         try {
             out.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.log(Level.WARNING,"Unable to close ZipedOutputStream!", ex);
         }
+
         return true;
     }
 }

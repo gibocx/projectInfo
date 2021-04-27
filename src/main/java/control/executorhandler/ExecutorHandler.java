@@ -1,19 +1,16 @@
 package control.executorhandler;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 public class ExecutorHandler {
     private static final Logger logger = Logger.getGlobal();
     public static final int STD_NUM_THREADS = 1;
     public static final long SHUTDOWN_GRACE_TIME = 10000;
-    private static int submittedJobs = 0;
+    private static final AtomicInteger submittedJobs = new AtomicInteger();
     private static ExecutorService executor;
     private static ScheduledThreadPoolExecutor scheduledExecutor;
-
-    private ExecutorHandler() {
-        throw new IllegalArgumentException("ExecutorHandler Utility class!");
-    }
 
     /**
      * Starts the normal Executor with a fixed ThreadPool of
@@ -26,7 +23,7 @@ public class ExecutorHandler {
      *
      * @param nThreads number of Threads in the pool
      */
-    public static void startExecutor(int nThreads) {
+    public static void startExecutor(final int nThreads) {
         if (executor != null) {
             if (((ThreadPoolExecutor) executor).getPoolSize() == nThreads) {
                 return;
@@ -87,13 +84,10 @@ public class ExecutorHandler {
         if (task != null) {
             try {
                 executor.execute(task);
-                synchronized (ExecutorHandler.class) {
-                    submittedJobs++;
-                }
-
+                submittedJobs.getAndIncrement();
                 return true;
             } catch (RejectedExecutionException ex) {
-                logger.warning("Rejected Execution :" + ex.getMessage() + " Runnable task: " + task.getClass());
+                logger.warning("Rejected Execution :" + ex.getMessage() + " Runnable task: " + task.getClass().getName());
             }
         }
         return false;
@@ -157,7 +151,7 @@ public class ExecutorHandler {
      * @return number of submitted task
      */
     public static int getSubmittedJobs() {
-        return submittedJobs;
+        return submittedJobs.get();
     }
 
     /**

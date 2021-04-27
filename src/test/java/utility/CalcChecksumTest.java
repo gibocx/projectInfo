@@ -29,8 +29,8 @@ public class CalcChecksumTest {
     }
 
     @Test
-    public void invalidFile() throws IOException {
-        Assert.assertEquals(0,CalcChecksum.checksum(new File("akdjfalkdjf")));
+    public void invalidFile() {
+        Assert.assertEquals(1,CalcChecksum.checksum(new File("akdjfalkdjf")));
     }
 
     @Test
@@ -45,11 +45,9 @@ public class CalcChecksumTest {
     }
 
     @Test
-    public void argumentsNull() throws IOException {
-        Assert.assertEquals(0,CalcChecksum.checksum((String)null));
-        Assert.assertEquals(0,CalcChecksum.checksum((byte[])null));
-        Assert.assertEquals(0,CalcChecksum.checksum((File)null));
-
+    public void argumentsNull() {
+        Assert.assertEquals(1,CalcChecksum.checksum((String)null));
+        Assert.assertEquals(1,CalcChecksum.checksum((byte[])null));
+        Assert.assertEquals(1,CalcChecksum.checksum((File)null));
     }
-
 }

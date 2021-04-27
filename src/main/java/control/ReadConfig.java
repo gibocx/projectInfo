@@ -16,7 +16,6 @@ import utility.CalcChecksum;
 import utility.TimeDiff;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,8 +70,8 @@ public class ReadConfig {
 
         configFileChecksum = CalcChecksum.checksum(CONFIG_FILE);
 
-        logger.info(() -> "Config Reload took " + time.chooseBest());
-        logger.info(() -> "Reloaded Config. checksum = " + configFileChecksum);
+        logger.info(() -> "Config Reload took " + time.chooseBest() + ". Reloaded Config." +
+                " checksum = " + configFileChecksum);
 
         return true;
     }

@@ -6,7 +6,6 @@ import download.Downloadable;
 import download.actions.DownloadActions;
 import download.methods.DownloadMethod;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -16,7 +15,7 @@ public class Job {
     private final String name, description;
     private final DownloadMethod method;
     private final DownloadActions actions;
-    private final Set<Category> categories = new HashSet<>();
+    private final Set<Category> categories;
 
     public Job(String name, String description, DownloadMethod method, DownloadActions actions, Set<String> categories) {
         if (method == null)
@@ -26,16 +25,13 @@ public class Job {
             throw new IllegalArgumentException("Set DownloadAction action can not be null!");
 
         if (categories == null || categories.isEmpty())
-            throw new IllegalArgumentException("Category List can not be empty!");
+            throw new IllegalArgumentException("Category List can not be empty or null!");
 
         this.method = method;
         this.actions = actions;
         this.description = description;
         this.name = name;
-
-        for (String str : categories) {
-            this.categories.add(new Category(str));
-        }
+        this.categories = Category.getCategories(categories);
     }
 
     /**
@@ -88,5 +84,4 @@ public class Job {
 
         return name;
     }
-
 }

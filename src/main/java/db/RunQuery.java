@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RunQuery {
@@ -34,8 +35,7 @@ public class RunQuery {
                 statement = con.prepareStatement(sql);
             }
 
-            ParameterMetaData params = statement.getParameterMetaData();
-            parameterCount = params.getParameterCount();
+            parameterCount = statement.getParameterMetaData().getParameterCount();
         } catch (SQLException ex) {
             throw new IllegalArgumentException(ex.getMessage());
         }
@@ -79,7 +79,7 @@ public class RunQuery {
                         + " actual arguments: " + args+1);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            logger.log(Level.FINE,"",ex);
             return false;
         }
 
@@ -91,6 +91,7 @@ public class RunQuery {
             statement.executeBatch();
             con.commit();
         } catch(SQLException ex) {
+            logger.log(Level.FINE,"Unable to execute and commit batch",ex);
             return false;
         }
 
@@ -98,11 +99,11 @@ public class RunQuery {
     }
 
     public boolean close() {
-        try {
             execute();
+        try {
             statement.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            logger.log(Level.FINE,"Unable to close statement",ex);
             return false;
         }
 

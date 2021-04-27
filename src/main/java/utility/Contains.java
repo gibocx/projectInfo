@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -21,12 +22,17 @@ public class Contains {
             return false;
         }
 
-        for (Object key : keys) {
-            if (!map.containsKey(key)) {
-                return false;
-            }
-        }
-        return true;
+        return map.keySet().containsAll(Arrays.asList(keys));
+    }
+
+    /**
+     * Checks of the Object[] array contains the given objects
+     * @param o
+     * @param obj
+     * @return true when the array contains the object
+     */
+    public static boolean contains(Object o, Object[] obj) {
+        return Arrays.stream(obj).anyMatch(o::equals);
     }
 
     /**
@@ -37,7 +43,7 @@ public class Contains {
      * @return true when the String contains all the Substrings
      */
     public static boolean containsSubStrings(String str, String[] substrings) {
-        if (str == null || str.isEmpty() || str.trim().isEmpty()) {
+        if (str == null || str.isEmpty() || str.isEmpty()) {
             return false;
         }
 
@@ -45,26 +51,19 @@ public class Contains {
             return false;
         }
 
-        str = str.toUpperCase();
-
-        for (String substring : substrings) {
-            if (!str.contains(substring.toUpperCase())) {
-                return false;
-            }
-        }
-
-        return true;
+        final String finalStr = str.toUpperCase();
+        return !Arrays.stream(substrings).anyMatch(sub -> !(finalStr.contains(sub.toUpperCase())));
     }
 
     /**
-     * Checks if a String contains the given Substrings. This method is case-sensitive
+     * Checks if a String contains all the given Substrings. This method is case-sensitive
      *
      * @param str        String to check
      * @param substrings array of Substrings
      * @return           true when the String contains all the Substrings
      */
     public static boolean containsSubStringsCaseSensitive(String str, String[] substrings) {
-        if (str == null || str.isEmpty() || str.trim().isEmpty()) {
+        if (str == null || str.isEmpty() || str.isEmpty()) {
             return false;
         }
 
@@ -72,41 +71,14 @@ public class Contains {
             return false;
         }
 
-        for (String substring : substrings) {
-            if (!str.contains(substring)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Checks if a String contains at least one of the given Substrings.
-     *
-     * @param str           String to check
-     * @param substrings    array of Substrings
-     * @return              true when the String contains at least one substring
-     */
-    public static boolean contains(String str, String[] substrings) {
-        if (str == null || str.isEmpty() || str.trim().isEmpty()) {
-            return false;
-        }
-
-        if (substrings == null || substrings.length == 0) {
-            return false;
-        }
-
-        for(String substring : substrings) {
-            if(str.contains(substring)) {
-                return true;
-            }
-        }
-
-        return false;
+        return !Arrays.stream(substrings).anyMatch(sub -> !(str.contains(sub)));
     }
 
     public static boolean contains(int value, int[] values) {
+        if(values.length == 0) {
+            return false;
+        }
+
         return IntStream.of(values).anyMatch(x -> x == value);
     }
 }

@@ -1,6 +1,5 @@
 package download.actions;
 
-import control.wrappers.ActionWrapper;
 import download.Category;
 import org.junit.Assert;
 import org.junit.Rule;

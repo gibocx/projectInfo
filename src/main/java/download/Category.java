@@ -1,7 +1,9 @@
 package download;
 
-public class Category {
+import java.util.HashSet;
+import java.util.Set;
 
+public class Category {
     private final String name;
     private long checksum, lastDownloaded;
 
@@ -9,6 +11,13 @@ public class Category {
         this.name = name;
         this.checksum = 0;
         this.lastDownloaded = 0;
+    }
+
+    public static Set<Category> getCategories(Set<String> categories) {
+        Set<Category> set = new HashSet<>();
+        categories.forEach(str -> set.add(new Category(str)));
+
+        return set;
     }
 
     public long getChecksum() {

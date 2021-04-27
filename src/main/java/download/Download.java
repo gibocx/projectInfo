@@ -49,9 +49,7 @@ public class Download {
             is.close();
             connection.disconnect();
 
-            if (logger.isLoggable(Level.FINE)) {
-                logger.fine("Downloaded url" + url + "; size " + buffer.size() + " bytes in " + time.chooseBest());
-            }
+            logger.fine("Downloaded url" + url + "; size " + buffer.size() + " bytes in " + time.chooseBest());
             return buffer.toByteArray();
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "IOException ", ex);

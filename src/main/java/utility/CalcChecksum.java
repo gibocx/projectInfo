@@ -23,7 +23,7 @@ public class CalcChecksum {
      * @return checksum as long
      */
     public static long checksum(byte[] bytes) {
-        if (bytes != null) {
+        if (bytes == null) {
             bytes = new byte[0];
         }
 
@@ -39,7 +39,7 @@ public class CalcChecksum {
      * @return checksum as long
      */
     public static long checksum(String str) {
-        if (str != null) {
+        if (str == null) {
             str = "";
         }
 

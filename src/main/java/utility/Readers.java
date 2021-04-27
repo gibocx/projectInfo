@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 public class Readers {
     private static final Logger logger = Logger.getGlobal();
+
     public static void readLineByLine(File file, Consumer<String> func) {
         if(!FileStuff.isValid(file)) {
             return;

@@ -24,7 +24,7 @@ public class UserAgentPoolTest {
     @Mock
     ScheduledFuture<?> t;
 
-    private final File f = new File(UserAgentPoolTest.class.getResource("userAgents.txt").toURI());
+    private final File f = new File(UserAgentPoolTest.class.getResource("userAgents").toURI());
     private final File invalid = new File(f.getParent() + "invalid");
 
     public UserAgentPoolTest() throws URISyntaxException {
