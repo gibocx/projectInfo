@@ -1,6 +1,7 @@
 package utility;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +57,7 @@ public class Placeholders {
         StringBuilder sb = new StringBuilder();
 
         while (m.find()) {
-            switch (m.group().split("=")[0].toUpperCase()) {
+            switch (m.group().split("=")[0].toUpperCase(Locale.ENGLISH)) {
                 case "TIME":
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(m.group().split("=")[1]);
                     str = str.replace("#" + m.group() + "#", Time.curDateTime().format(formatter));
@@ -76,7 +77,7 @@ public class Placeholders {
 
     public static String threadInfo(String info) {
         if (info != null) {
-            switch (info.toUpperCase()) {
+            switch (info.toUpperCase(Locale.ENGLISH)) {
                 case "ID":
                     return String.valueOf(Thread.currentThread().getId());
 

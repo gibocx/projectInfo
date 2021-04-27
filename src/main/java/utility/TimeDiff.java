@@ -1,10 +1,12 @@
 package utility;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class TimeDiff {
-    private static final DecimalFormat format = new DecimalFormat("#.##");
+    private static final DecimalFormat format = new DecimalFormat("#.##",new DecimalFormatSymbols(Locale.ENGLISH));
     private long startTime = System.nanoTime();
 
     public TimeDiff() {

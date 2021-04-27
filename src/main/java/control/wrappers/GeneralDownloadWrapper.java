@@ -65,7 +65,7 @@ public class GeneralDownloadWrapper {
     }
 
     public void setUserAgentFileMode(String userAgentFileMode) {
-        this.userAgentFileMode = userAgentFileMode.toUpperCase();
+        this.userAgentFileMode = userAgentFileMode.toUpperCase(Locale.ENGLISH);
     }
 
     public Set<String> getUserAgents() {

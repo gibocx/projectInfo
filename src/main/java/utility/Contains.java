@@ -1,6 +1,7 @@
 package utility;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -51,8 +52,8 @@ public class Contains {
             return false;
         }
 
-        final String finalStr = str.toUpperCase();
-        return !Arrays.stream(substrings).anyMatch(sub -> !(finalStr.contains(sub.toUpperCase())));
+        final String finalStr = str.toUpperCase(Locale.ENGLISH);
+        return !Arrays.stream(substrings).anyMatch(sub -> !(finalStr.contains(sub.toUpperCase(Locale.ENGLISH))));
     }
 
     /**
