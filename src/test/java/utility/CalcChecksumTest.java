@@ -37,7 +37,8 @@ public class CalcChecksumTest {
     public void sameChecksum() throws IOException {
         final byte[] bytes = Files.readAllBytes(Paths.get(f.getPath()));
         final String str = new String(bytes, StandardCharsets.UTF_8);
-        final long sum = 94318608;
+
+        long sum = CalcChecksum.checksum(f);
 
         Assert.assertEquals(sum, CalcChecksum.checksum(f));
         Assert.assertEquals(sum, CalcChecksum.checksum(bytes));
