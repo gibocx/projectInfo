@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 class PreActionRemoveLines implements PreAction {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(PreActionRemoveLines.class.getName());
     private int[] linesToRemove;
 
     /**

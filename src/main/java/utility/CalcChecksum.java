@@ -13,7 +13,7 @@ import java.util.zip.Checksum;
 import static utility.FileStuff.isValid;
 
 public class CalcChecksum {
-    static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    static final Logger logger = Logger.getLogger(CalcChecksum.class.getName());
     private static final int BUFFER_SIZE = 4096;
 
     /**
@@ -50,6 +50,7 @@ public class CalcChecksum {
      * Computes the checksum of a File
      * When an Exception occurs or the filename is invalid the same
      * arbitrary value is returned.
+     *
      * @param file File to compute the checksum of
      * @return checksum as long
      */
@@ -65,12 +66,12 @@ public class CalcChecksum {
                     bytesRead = input.read(buffer);
                 }
             } catch (IOException ex) {
-                logger.log(Level.FINE,"IOException!",ex);
-                return checksum((String)null);
+                logger.log(Level.FINE, "IOException!", ex);
+                return checksum((String) null);
             }
             return sum.getValue();
         }
 
-        return checksum((String)null);
+        return checksum((String) null);
     }
 }

@@ -1,13 +1,19 @@
 package control.executorhandler;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 public class ExecutorHandler {
-    private static final Logger logger = Logger.getGlobal();
     public static final int STD_NUM_THREADS = 1;
     public static final long SHUTDOWN_GRACE_TIME = 10000;
+    private static final Logger logger = Logger.getLogger(ExecutorHandler.class.getName());
     private static final AtomicInteger submittedJobs = new AtomicInteger();
     private static ExecutorService executor;
     private static ScheduledThreadPoolExecutor scheduledExecutor;
@@ -173,8 +179,7 @@ public class ExecutorHandler {
 
     private static int checkThreadCount(int nThreads) {
         if (nThreads <= 0) {
-            logger.warning("Invalid number of threads : " + nThreads + " defaults to " + STD_NUM_THREADS + "; Caller was " +
-                    Thread.currentThread().getStackTrace()[2].getMethodName());
+            logger.warning(String.format("Invalid number of threads : %d defaults to %d; Caller was %s", nThreads, STD_NUM_THREADS, Thread.currentThread().getStackTrace()[2].getMethodName()));
             nThreads = STD_NUM_THREADS;
         }
 

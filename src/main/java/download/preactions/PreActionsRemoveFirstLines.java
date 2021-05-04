@@ -12,10 +12,10 @@ class PreActionsRemoveFirstLines extends PreActionRemoveLines {
     PreActionsRemoveFirstLines(PreActionWrapper pre) {
         super();
 
-        int numLines = Integer.valueOf(pre.get("numLines").orElse(STD_NUM_LINES));
+        int numLines = Integer.parseInt(pre.get("numLines").orElse(STD_NUM_LINES));
 
         int[] linesToRemove = new int[numLines];
-        for(int i = 0; i < numLines; i++) {
+        for (int i = 0; i < numLines; i++) {
             linesToRemove[i] = i;
         }
 

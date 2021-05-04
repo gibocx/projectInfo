@@ -13,7 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 class ActionSaveToZipBatch extends ActionSaveToZip {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(ActionSaveToZipBatch.class.getName());
     private ZipOutputStream out;
 
     public ActionSaveToZipBatch(String filePath, String zipEntryName) {
@@ -29,7 +29,7 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
     public boolean action(byte[] data, Category category) {
         try {
             if (out != null) {
-                ZipEntry e = new ZipEntry(super.getZipEntryName(category.getName()));
+                ZipEntry e = new ZipEntry(super.getZipEntryName(category));
                 out.putNextEntry(e);
 
                 out.write(data);
@@ -54,7 +54,7 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
                 logger.warning(() -> "unable to create file with path " + filePath);
             }
         } catch (FileNotFoundException ex) {
-            logger.log(Level.WARNING,"Should have created File but could not find file " + filePath,ex);
+            logger.log(Level.WARNING, "Should have created File but could not find file " + filePath, ex);
         }
 
         return false;
@@ -66,7 +66,7 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
         try {
             out.close();
         } catch (IOException ex) {
-            logger.log(Level.WARNING,"Unable to close ZipedOutputStream!", ex);
+            logger.log(Level.WARNING, "Unable to close ZipedOutputStream!", ex);
         }
 
         return true;

@@ -8,7 +8,7 @@ import static utility.Time.getDate;
 
 
 public class Startup {
-    public static final Logger logger = Logger.getGlobal();
+    public static final Logger logger = Logger.getLogger(Startup.class.getName());
     private static final String VERSION = "0.0.1";
 
     public static void printSystemProperties() {
@@ -19,11 +19,11 @@ public class Startup {
 
     public static void main(String[] args) {
         System.out.print("                 _           _   ___        __       \n" +
-                         " _ __  _ __ ___ (_) ___  ___| |_|_ _|_ __  / _| ___  \n" +
-                         "| '_ \\| '__/ _ \\| |/ _ \\/ __| __|| || '_ \\| |_ / _ \\ \n" +
-                         "| |_) | | | (_) | |  __/ (__| |_ | || | | |  _| (_) |\n" +
-                         "| .__/|_|  \\___// |\\___|\\___|\\__|___|_| |_|_|  \\___/ \n" +
-                         "|_|           |__/                                   \n");
+                " _ __  _ __ ___ (_) ___  ___| |_|_ _|_ __  / _| ___  \n" +
+                "| '_ \\| '__/ _ \\| |/ _ \\/ __| __|| || '_ \\| |_ / _ \\ \n" +
+                "| |_) | | | (_) | |  __/ (__| |_ | || | | |  _| (_) |\n" +
+                "| .__/|_|  \\___// |\\___|\\___|\\__|___|_| |_|_|  \\___/ \n" +
+                "|_|           |__/                                   \n");
 
         printSystemProperties();
         logger.info("Startup at " + getDate());

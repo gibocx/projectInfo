@@ -10,9 +10,9 @@ import java.util.logging.Logger;
  * Logs the uptime of the current application
  */
 public class UpSince implements Runnable {
-    private static final TimeDiff time = new TimeDiff();
-    private static final Logger logger = Logger.getGlobal();
     public static final int PERIOD_SEC = 300;
+    private static final TimeDiff time = new TimeDiff();
+    private static final Logger logger = Logger.getLogger(UpSince.class.getName());
     public static Future<UpSince> future;
 
     /**

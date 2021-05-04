@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 class DownloadAfter implements DownloadMethod {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(DownloadAfter.class.getName());
     private final String url, contentType;
     private final long minTimeDifference;
 
@@ -60,7 +60,7 @@ class DownloadAfter implements DownloadMethod {
 
         for (Category category : categories) {
             if (checkCategory(category)) {
-                byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
+                byte[] data = Download.downloadByteArray(Placeholders.replace(url, category), contentType);
 
                 category.setLastDownloaded(Time.getUnixTimestamp());
                 category.setChecksum(CalcChecksum.checksum(data));

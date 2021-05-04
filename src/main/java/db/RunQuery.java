@@ -4,7 +4,6 @@ import utility.Concat;
 import utility.Contains;
 
 import java.sql.Connection;
-import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 
 public class RunQuery {
     public static final int MAX_BATCH_SIZE = 50;
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(RunQuery.class.getName());
     private static final boolean CRUDE_SQL_CHECK = true;
     private final Connection con;
     private final PreparedStatement statement;
@@ -61,7 +60,7 @@ public class RunQuery {
             if (parameterCount == values.length) {
                 for (args = 0; args < values.length; args++) {
                     if (values[args] != null) {
-                        statement.setString(args+1, values[args]);
+                        statement.setString(args + 1, values[args]);
                     } else {
                         logger.warning("This function requires at least one value in the array!");
                         return false;
@@ -76,10 +75,10 @@ public class RunQuery {
                 }
             } else {
                 logger.fine("No matching Parameter sizes requested arguments :" + parameterCount
-                        + " actual arguments: " + args+1);
+                        + " actual arguments: " + args + 1);
             }
         } catch (SQLException ex) {
-            logger.log(Level.FINE,"",ex);
+            logger.log(Level.FINE, "", ex);
             return false;
         }
 
@@ -90,8 +89,8 @@ public class RunQuery {
         try {
             statement.executeBatch();
             con.commit();
-        } catch(SQLException ex) {
-            logger.log(Level.FINE,"Unable to execute and commit batch",ex);
+        } catch (SQLException ex) {
+            logger.log(Level.FINE, "Unable to execute and commit batch", ex);
             return false;
         }
 
@@ -99,11 +98,11 @@ public class RunQuery {
     }
 
     public boolean close() {
-            execute();
+        execute();
         try {
             statement.close();
         } catch (SQLException ex) {
-            logger.log(Level.FINE,"Unable to close statement",ex);
+            logger.log(Level.FINE, "Unable to close statement", ex);
             return false;
         }
 

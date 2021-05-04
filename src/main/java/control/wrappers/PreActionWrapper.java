@@ -1,27 +1,21 @@
 package control.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import download.preactions.PreAction;
+import download.preactions.PreActionFactory;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
 public class PreActionWrapper {
+    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private String name = "";
     private int[] rows = new int[0];
-    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
-    public void setRows(int[] rows) {
-        this.rows = rows;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @JsonAnySetter
     public void setMap(String name, String value) {
-        this.map.put(name,value);
+        this.map.put(name, value);
     }
 
     /**
@@ -29,6 +23,10 @@ public class PreActionWrapper {
      */
     public int[] getRows() {
         return rows;
+    }
+
+    public void setRows(int[] rows) {
+        this.rows = rows;
     }
 
     public Optional<String> get(String key) {
@@ -40,5 +38,13 @@ public class PreActionWrapper {
      */
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PreAction getPreAction() {
+        return PreActionFactory.newAction(this);
     }
 }

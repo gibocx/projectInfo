@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * sets all the configured properties.
  */
 public class ReadConfig {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(ReadConfig.class.getName());
     private static final File CONFIG_FILE = new File("./projectInfo.yaml".replace("/", File.separator));
     private static boolean automaticReload;
     private static long configFileChecksum;

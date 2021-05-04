@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConfigWrapper {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(ConfigWrapper.class.getName());
     private String configReload;
     private int checkIntervals, checkConfigReload, executorThreads, scheduledThreads;
     private GeneralDownloadWrapper download;
@@ -72,10 +72,7 @@ public class ConfigWrapper {
      * @return true only when automatic config reload is required
      */
     public boolean isAutomaticReload() {
-        if (configReload == null)
-            return false;
-
-        return configReload.equalsIgnoreCase("yes");
+        return "yes".equalsIgnoreCase(configReload);
     }
 
     /**
@@ -102,7 +99,7 @@ public class ConfigWrapper {
             try {
                 set.add(job.toJob());
             } catch (IllegalArgumentException ex) {
-                logger.log(Level.INFO, "IllegalArgumentException : ", ex);
+                logger.log(Level.INFO, "Unable to get create a new Job", ex);
             }
         }
         return set;

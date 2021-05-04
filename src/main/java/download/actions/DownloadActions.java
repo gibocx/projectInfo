@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * This Class is a wrapper for multiple actions.
  */
 public class DownloadActions implements DownloadAction {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(DownloadAction.class.getName());
     private final Set<DownloadAction> actions;
     private PreAction preAction;
 
@@ -22,20 +22,20 @@ public class DownloadActions implements DownloadAction {
 
     /**
      * Uses the default PreAction Nothing
+     *
      * @param actions
      */
     public DownloadActions(Set<DownloadAction> actions) {
         this.actions = actions;
     }
 
-
     public boolean action(byte[] data, Category category) {
         boolean success = true;
         TimeDiff time = new TimeDiff();
 
-        if(preAction != null) {
+        if (preAction != null) {
             data = preAction.compute(data);
-            logger.fine("PreAction("+ preAction.getClass() +")took " + time.chooseBest());
+            logger.severe("PreAction(" + preAction.getClass() + ")took " + time.chooseBest());
         }
 
         time.reset();

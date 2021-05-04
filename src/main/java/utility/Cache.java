@@ -24,7 +24,7 @@ public class Cache<K, V> {
     }
 
     public void clean() {
-        for(K key: getExpiredKeys()) {
+        for (K key : getExpiredKeys()) {
             remove(key);
         }
     }
@@ -43,12 +43,12 @@ public class Cache<K, V> {
     }
 
     /**
-     * @param key key for retrieving the value
-     * @param value Object to store
+     * @param key        key for retrieving the value
+     * @param value      Object to store
      * @param timeToLive TTL for the object to live in milliseconds
      */
     public void put(K key, V value, long timeToLive) {
-        if(value == null) {
+        if (value == null) {
             remove(key);
         }
 
@@ -56,7 +56,7 @@ public class Cache<K, V> {
     }
 
     public void put(K key, V value) {
-        put(key,value, normalTimeToLive);
+        put(key, value, normalTimeToLive);
     }
 
     public void remove(K key) {
@@ -78,7 +78,7 @@ public class Cache<K, V> {
         private final long validUntil;
 
         /**
-         * @param value Object to store
+         * @param value      Object to store
          * @param timeToLive TTL of the object in MS
          */
         protected CacheValue(V value, long timeToLive) {

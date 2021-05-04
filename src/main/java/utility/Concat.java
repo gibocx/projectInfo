@@ -2,7 +2,7 @@ package utility;
 
 public class Concat {
     public static String concat(String[] strs) {
-        if(strs == null || strs.length == 0) {
+        if (strs == null || strs.length == 0) {
             return null;
         }
 
@@ -16,15 +16,15 @@ public class Concat {
     }
 
     public static String concat(Object[] values, String before, String after) {
-        if(values == null || values.length == 0) {
+        if (values == null || values.length == 0) {
             return null;
         }
 
-        if(before == null) {
+        if (before == null) {
             before = "";
         }
 
-        if(after == null) {
+        if (after == null) {
             after = "";
         }
 
@@ -38,15 +38,15 @@ public class Concat {
     }
 
     public static String concat(int[] values, String before, String after) {
-        if(values == null || values.length == 0) {
+        if (values == null || values.length == 0) {
             return null;
         }
 
-        if(before == null) {
+        if (before == null) {
             before = "";
         }
 
-        if(after == null) {
+        if (after == null) {
             after = "";
         }
 

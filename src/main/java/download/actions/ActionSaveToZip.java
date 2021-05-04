@@ -12,7 +12,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 class ActionSaveToZip extends ActionSaveToFile {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(ActionSaveToZip.class.getName());
     private final String zipEntryName;
 
     public ActionSaveToZip(String file, String zipEntryName) {
@@ -30,7 +30,7 @@ class ActionSaveToZip extends ActionSaveToFile {
     }
 
     public ActionSaveToZip(ActionWrapper action) {
-        this(action.getNullable("file"),action.getNullable("zipEntryName"));
+        this(action.getNullable("file"), action.getNullable("zipEntryName"));
     }
 
     @Override
@@ -40,7 +40,7 @@ class ActionSaveToZip extends ActionSaveToFile {
         try {
             if (FileStuff.createFile(file)) {
                 ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file));
-                ZipEntry e = new ZipEntry(Placeholders.replace(zipEntryName, category.getName()));
+                ZipEntry e = new ZipEntry(Placeholders.replace(zipEntryName, category));
                 out.putNextEntry(e);
 
                 out.write(data);
@@ -55,7 +55,7 @@ class ActionSaveToZip extends ActionSaveToFile {
         return false;
     }
 
-    public String getZipEntryName(String cat) {
-        return Placeholders.replace(zipEntryName, cat);
+    public String getZipEntryName(Category category) {
+        return Placeholders.replace(zipEntryName, category);
     }
 }

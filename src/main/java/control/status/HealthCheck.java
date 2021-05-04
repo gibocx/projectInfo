@@ -6,7 +6,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class HealthCheck implements Runnable {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(HealthCheck.class.getName());
     private static final int MIN_PERIOD = 1;
     private static final int STD_PERIOD = 300;
     private static Future<?> future;
@@ -33,6 +33,7 @@ public class HealthCheck implements Runnable {
             future = null;
         }
     }
+
     @Override
     public void run() {
         // TODO: 03.04.2021 do meaningfull health checks 

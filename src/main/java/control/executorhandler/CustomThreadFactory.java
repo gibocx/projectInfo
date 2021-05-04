@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 class CustomThreadFactory implements ThreadFactory {
     final UncaughtExceptionHandler handler = new UncaughtExceptionHandler() {
-        private final Logger logger = Logger.getGlobal();
+        private final Logger logger = Logger.getLogger(CustomThreadFactory.class.getName());
 
         @Override
         public void uncaughtException(Thread t, Throwable e) {
@@ -26,7 +26,8 @@ class CustomThreadFactory implements ThreadFactory {
 
     /**
      * Creates a new ThreadFactory which names the Threads according to
-     * suppliedName[nThread].
+     * suppliedName[nThread]. Starts with 1. Also sets a uncaughtExceptionHandler
+     * for each created Thread.
      *
      * @param suppliedName suppliedName
      */

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.logging.Logger;
 
 class InsertJSON implements InsertDataType {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(InsertJSON.class.getName());
     private final RunQuery run;
     private final String desiredObject;
     private final String[] desiredKeys;
@@ -26,7 +26,7 @@ class InsertJSON implements InsertDataType {
         this.run = run;
         desiredObject = in.get("desiredObject");
 
-        if(desiredObject != null || !desiredObject.isEmpty()) {
+        if (desiredObject != null || !desiredObject.isEmpty()) {
             logger.fine("Set desiredObject to " + desiredObject);
         }
 
@@ -57,7 +57,7 @@ class InsertJSON implements InsertDataType {
         }
 
         return run.execute();
-}
+    }
 
     @Override
     public boolean finish() {
@@ -65,8 +65,8 @@ class InsertJSON implements InsertDataType {
     }
 
     private boolean checkJSON(JSONObject obj) {
-        for(String value : desiredKeys) {
-            if(obj.isNull(value)) {
+        for (String value : desiredKeys) {
+            if (obj.isNull(value)) {
                 return false;
             }
         }
@@ -76,7 +76,7 @@ class InsertJSON implements InsertDataType {
     private String[] computeValues(JSONObject obj) {
         String[] values = new String[desiredKeys.length + 1];
 
-        for(int i = 0; i < desiredKeys.length; i++) {
+        for (int i = 0; i < desiredKeys.length; i++) {
             values[i] = obj.getString(desiredKeys[i]);
         }
 

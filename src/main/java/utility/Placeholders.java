@@ -1,5 +1,7 @@
 package utility;
 
+import download.Category;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -24,8 +26,8 @@ public class Placeholders {
      * @param cat Category name to replace #category#
      * @return String with replaced placeholders
      */
-    public static String replace(String str, String cat) {
-        return replace(str.replace("#category#", cat));
+    public static String replace(final String str, final Category cat) {
+        return replace(str.replace("#category#", cat.getName()));
     }
 
     /**
@@ -46,33 +48,36 @@ public class Placeholders {
      * @return String with replaced placeholders
      */
     public static String replace(String str) {
-        if (str == null)
-            return null;
 
-        // check if fileNameFormat is valid -> even amount of #
-        if (((str.length() - str.replaceAll("#", "").length()) % 2) != 0)
-            return str;
+        if (str != null && !isValid(str)) {
+            Matcher m = Pattern.compile("(?<=#)(.*?)(?=#)").matcher(str);
 
-        Matcher m = Pattern.compile("(?<=#)(.*?)(?=#)").matcher(str);
-        StringBuilder sb = new StringBuilder();
-
-        while (m.find()) {
-            switch (m.group().split("=")[0].toUpperCase(Locale.ENGLISH)) {
-                case "TIME":
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(m.group().split("=")[1]);
-                    str = str.replace("#" + m.group() + "#", Time.curDateTime().format(formatter));
-                    break;
-                case "THREAD":
-                    str = str.replace("#" + m.group() + "#", threadInfo(m.group().split("=")[1]));
-                    break;
-                case "RANDOM":
-                    str = str.replace("#" + m.group() + "#", String.valueOf(ThreadRandom.rand()));
-                    break;
-                default:
+            while (m.find()) {
+                switch (m.group().split("=")[0].toUpperCase(Locale.ENGLISH)) {
+                    case "TIME":
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(m.group().split("=")[1]);
+                        str = str.replace("#" + m.group() + "#", Time.curDateTime().format(formatter));
+                        break;
+                    case "THREAD":
+                        str = str.replace("#" + m.group() + "#", threadInfo(m.group().split("=")[1]));
+                        break;
+                    case "RANDOM":
+                        str = str.replace("#" + m.group() + "#", String.valueOf(ThreadRandom.rand()));
+                        break;
+                    default:
+                }
             }
         }
-
         return str;
+    }
+
+    /**
+     * check if the String contains valid Placeholders -> even amount of #
+     * @param str
+     * @return true when valid
+     */
+    private static boolean isValid(String str) {
+        return ((str.length() - str.replaceAll("#", "").length()) % 2) != 0;
     }
 
     public static String threadInfo(String info) {

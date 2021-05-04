@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class DatabaseWrapper {
+    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private String user;
     private String password;
     private String jdbcUrl;
-    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     public String getUser() {
         return user;
@@ -39,7 +39,9 @@ public class DatabaseWrapper {
         return (user != null && password != null && jdbcUrl != null);
     }
 
-    public String getNullable(String key) {return map.get(key);}
+    public String getNullable(String key) {
+        return map.get(key);
+    }
 
     public Map<String, String> getMap() {
         return map;
@@ -47,6 +49,6 @@ public class DatabaseWrapper {
 
     @JsonAnySetter
     public void setMap(String name, String value) {
-        this.map.put(name,value);
+        this.map.put(name, value);
     }
 }

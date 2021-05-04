@@ -1,7 +1,8 @@
 package download;
 
 public enum DataFormat {
-    JSON("JSON"), CSV("CSV"), PLAINTEXT("PLAINTEXT"), NONE("NONE"), ;
+    JSON("JSON"), CSV("CSV"), PLAINTEXT("PLAINTEXT"), NONE("NONE"),
+    ;
 
     private final String value;
 

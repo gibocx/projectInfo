@@ -1,18 +1,18 @@
 package control.wrappers;
 
 import control.Job;
-import download.actions.DownloadAction;
 import download.actions.DownloadActions;
 import download.methods.DownloadMethodFactory;
 
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
+
 public class JobWrapper {
-    private String name, description;
     private final Map<String, String> download = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private String name, description;
     private Set<String> categories;
     private Set<ActionWrapper> actions;
     private PreActionWrapper preAction;
@@ -23,13 +23,7 @@ public class JobWrapper {
     }
 
     private DownloadActions getDownloadActions() {
-        Set<DownloadAction> out = new HashSet<>();
-
-        for (ActionWrapper action : actions) {
-            out.add(action.getAction());
-        }
-
-        return new DownloadActions(out);
+        return new DownloadActions(ActionWrapper.getActions(actions), preAction.getPreAction());
     }
 
     private void setActions(Set<ActionWrapper> actions) {
@@ -54,5 +48,20 @@ public class JobWrapper {
 
     public void setPreAction(PreActionWrapper preAction) {
         this.preAction = preAction;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobWrapper that = (JobWrapper) o;
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description)
+                && download.equals(that.download) && categories.equals(that.categories) && actions.equals(that.actions)
+                && preAction.equals(that.preAction);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(download, categories, actions, preAction);
     }
 }

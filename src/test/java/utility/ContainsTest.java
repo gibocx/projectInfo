@@ -61,6 +61,7 @@ public class ContainsTest {
         Assert.assertTrue(Contains.containsSubStrings(contains,substrings));
 
         Assert.assertFalse(Contains.containsSubStrings(contains,new String[]{"does not contains"}));
+        Assert.assertFalse(Contains.containsSubStrings(contains,new String[]{"contains","not contain"}));
     }
 
     @Test

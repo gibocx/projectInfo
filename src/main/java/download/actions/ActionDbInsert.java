@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 class ActionDbInsert implements DownloadAction {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(ActionDbInsert.class.getName());
     private final InsertInfo in;
     private InsertDataType insertData;
     private boolean dataBaseAvailable;
@@ -22,7 +22,7 @@ class ActionDbInsert implements DownloadAction {
     }
 
     public boolean action(byte[] data, Category category) {
-        if(dataBaseAvailable) {
+        if (dataBaseAvailable) {
             String str = new String(data, StandardCharsets.UTF_8);
             return insertData.insert(str, category);
         }
@@ -34,15 +34,17 @@ class ActionDbInsert implements DownloadAction {
     public boolean init() {
         dataBaseAvailable = Connect.isAvailable();
 
-        if(dataBaseAvailable) {
+        if (dataBaseAvailable) {
             insertData = InsertMethodFactory.newMethod(in, new RunQuery(in.getQuery(), in.getSchema()));
+        } else {
+            logger.info("Database is currently not available. Skipped");
         }
         return dataBaseAvailable;
     }
 
     @Override
     public boolean finish() {
-        if(dataBaseAvailable) {
+        if (dataBaseAvailable) {
             return insertData.finish();
         }
 

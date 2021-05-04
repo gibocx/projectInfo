@@ -9,8 +9,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class Downloadable implements Runnable {
-    static final Logger logger = Logger.getGlobal();
-
+    private static final Logger logger = Logger.getLogger(Downloadable.class.getName());
     private final DownloadMethod method;
     private final DownloadActions action;
     private final Set<Category> categories;

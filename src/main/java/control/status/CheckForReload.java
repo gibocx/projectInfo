@@ -1,18 +1,15 @@
 package control.status;
 
-import control.Job;
 import control.ReadConfig;
 import control.executorhandler.ExecutorHandler;
 import utility.TimeDiff;
 
-import java.util.List;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class CheckForReload implements Runnable {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(CheckForReload.class.getName());
     private static final int MIN_RELOAD_PERIOD = 30;
-    private static List<Job> jobs;
     private static Future<CheckForReload> future;
 
     public static void schedule(int period) {

@@ -6,12 +6,13 @@ import download.Downloadable;
 import download.actions.DownloadActions;
 import download.methods.DownloadMethod;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 
 public class Job {
 
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(Job.class.getName());
     private final String name, description;
     private final DownloadMethod method;
     private final DownloadActions actions;
@@ -56,6 +57,7 @@ public class Job {
      * Submits a new Downloadable from this Job for execution
      */
     public void submit() {
+        logger.fine(() -> "Submitted Job name: " + this.getName() + " ; description : " + this.getDescription());
         ExecutorHandler.submit(new Downloadable(method, actions, categories));
     }
 
@@ -83,5 +85,20 @@ public class Job {
         }
 
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Job job = (Job) o;
+        return Objects.equals(name, job.name) && Objects.equals(description, job.description)
+                && method.equals(job.method) && actions.equals(job.actions)
+                && categories.equals(job.categories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, method, actions, categories);
     }
 }

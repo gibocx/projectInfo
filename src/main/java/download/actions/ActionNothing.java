@@ -9,9 +9,11 @@ import download.Category;
  */
 class ActionNothing implements DownloadAction {
 
-    public ActionNothing() {}
+    public ActionNothing() {
+    }
 
-    public ActionNothing(Object... args) {}
+    public ActionNothing(Object... args) {
+    }
 
     /**
      * Performs the recurring action for each category

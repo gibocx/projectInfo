@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class FileStuff {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(FileStuff.class.getName());
 
-    public static boolean isValid(File file) {
+    public static boolean isValid(final File file) {
         if (file != null) {
             return (file.exists() && file.isFile());
         }
@@ -15,7 +15,7 @@ public class FileStuff {
         return false;
     }
 
-    public static boolean isValid(String path) {
+    public static boolean isValid(final String path) {
         if (path != null) {
             File tmp = new File(path);
             return isValid(tmp);
@@ -30,7 +30,7 @@ public class FileStuff {
      * @param file File to create
      * @return true only when created successful
      */
-    public static boolean createFile(File file) {
+    public static boolean createFile(final File file) {
         if (file != null && !isValid(file)) {
             try {
                 return file.createNewFile();
@@ -48,7 +48,7 @@ public class FileStuff {
      * @param path Path to create
      * @return true only when created successful
      */
-    public static boolean createFile(String path) {
+    public static boolean createFile(final String path) {
         if (path != null) {
             File file = new File(path);
             return createFile(file);
@@ -63,7 +63,7 @@ public class FileStuff {
      * @param file File to delete
      * @return true only if successfully deleted
      */
-    public static boolean delete(File file) {
+    public static boolean delete(final File file) {
         if (isValid(file)) {
             return file.delete();
         }
@@ -76,7 +76,7 @@ public class FileStuff {
      * @param path file path to delete
      * @return true only if successfully deleted
      */
-    public static boolean delete(String path) {
+    public static boolean delete(final String path) {
         if (path != null) {
             File file = new File(path);
             return delete(file);

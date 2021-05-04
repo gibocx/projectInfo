@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 class InsertCSV implements InsertDataType {
     // matches the character before the regex only when not enclosed in "
     private static final String REGEX = "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
-    private static final Logger logger = Logger.getGlobal();
-    private String commaDelimiter = ",";
+    private static final Logger logger = Logger.getLogger(InsertCSV.class.getName());
     private final RunQuery run;
     private final int numDesiredColumns;
     private final int[] desiredColumns;
+    private String commaDelimiter = ",";
 
     public InsertCSV(InsertInfo in, RunQuery run) {
         if (run == null) {
@@ -28,10 +28,10 @@ class InsertCSV implements InsertDataType {
 
         this.run = run;
 
-        if(in.get("delimiter") != null) {
+        if (in.get("delimiter") != null) {
             String delimiter = in.get("delimiter");
 
-            if(delimiter.length() == 1) {
+            if (delimiter.length() == 1) {
                 commaDelimiter = delimiter;
                 logger.fine(() -> "Set CSV comma delimiter to " + delimiter);
             } else {
@@ -46,7 +46,7 @@ class InsertCSV implements InsertDataType {
     }
 
     private void populateDesiredColumns(InsertInfo in) {
-        String tmp = null;
+        String tmp = "";
         int i = 1;
 
         try {
@@ -55,7 +55,7 @@ class InsertCSV implements InsertDataType {
                 i++;
             }
         } catch (NumberFormatException ex) {
-            if(tmp != null || tmp.isEmpty()) {
+            if (tmp != null) {
                 throw new IllegalArgumentException("Can not parse number from " + tmp
                         + "in argument" + i + "; " + tmp.split("row")[1] + " is not a valid number!");
             } else {
@@ -90,7 +90,7 @@ class InsertCSV implements InsertDataType {
         if (columns.length + 1 < numDesiredColumns) {
             logger.fine("Number of desired columns does not match! Desired : " + numDesiredColumns
                     + " actual :" + (columns.length + 1) + ". From line \"" + Concat.concat(columns) + "\". Desired " +
-                    "Columns are"+ System.lineSeparator() + Concat.concat(desiredColumns, "row: ", System.lineSeparator()));
+                    "Columns are" + System.lineSeparator() + Concat.concat(desiredColumns, "row: ", System.lineSeparator()));
             return new String[0];
         }
 

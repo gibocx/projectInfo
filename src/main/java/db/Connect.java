@@ -11,14 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Connect {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(Connect.class.getName());
     private static ComboPooledDataSource source;
 
     public static void start(DatabaseWrapper db) {
         String[] reqArgs = new String[]{"jdbcurl", "user", "password"};
         if (!db.isValid()) {
             logger.info("Provided map does at least not contain one of the following values "
-                    + Concat.concat(reqArgs,null,";"));
+                    + Concat.concat(reqArgs, null, ";"));
 
             stop();
             return;
@@ -41,19 +41,20 @@ public class Connect {
                 source = tmp;
             }
 
-            if(isAvailable()) {
+            if (isAvailable()) {
                 logger.info("Successfully set new Datasource!");
             } else {
                 stop();
             }
 
-        } catch(PropertyVetoException ex) {
-            logger.log(Level.INFO,"YES",ex);
+        } catch (PropertyVetoException ex) {
+            logger.log(Level.INFO, "YES", ex);
         }
     }
 
     /**
      * Checks the connection
+     *
      * @return true when connection is connected
      */
     public static boolean isAvailable() {
@@ -61,7 +62,7 @@ public class Connect {
             source.getConnection().createStatement().execute("SELECT 1;");
             return true;
         } catch (SQLException | NullPointerException ex) {
-            logger.log(Level.FINE,"Problems with connection!", ex);
+            logger.log(Level.FINE, "Problems with connection!", ex);
             return false;
         }
     }
@@ -71,14 +72,14 @@ public class Connect {
             con.createStatement().execute("SELECT 1");
             return true;
         } catch (SQLException | NullPointerException ex) {
-            logger.log(Level.FINE,"Problems with connection!", ex);
+            logger.log(Level.FINE, "Problems with connection!", ex);
             return false;
         }
     }
 
     public static void stop() {
         synchronized (Connect.class) {
-            if(source != null) {
+            if (source != null) {
                 source.close();
                 source = null;
             }

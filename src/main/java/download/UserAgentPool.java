@@ -8,8 +8,6 @@ import utility.ThreadRandom;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
@@ -17,7 +15,7 @@ public class UserAgentPool {
     public static final int MIN_RELOAD_CHECK = 60;
     private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
             "(KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36";
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(UserAgentPool.class.getName());
     private static final long userAgentFileChecksum = 0;
     private static ArrayList<String> agents = new ArrayList<>();
     private static DataFormat dataFormat = DataFormat.NONE;
@@ -61,7 +59,7 @@ public class UserAgentPool {
                         return false;
                 }
 
-                logger.fine("Loaded new UserAgents. Currently loaded : " + agents.size());
+                logger.fine(() -> "Loaded new UserAgents. Currently loaded : " + agents.size() + " Agents");
             } else {
                 logger.fine("No reload of UserAgentFile! Same Checksum!");
             }

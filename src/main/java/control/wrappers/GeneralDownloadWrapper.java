@@ -3,14 +3,20 @@ package control.wrappers;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+
 
 public class GeneralDownloadWrapper {
+    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private int connectionTimeout, readTimeout, userAgentReloadPeriod;
     private String userAgentFile, userAgentFileMode;
     private Set<String> userAgents;
-    private final Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
 
     /**
      * Return the connectionTimeout specified in the config file
@@ -95,12 +101,14 @@ public class GeneralDownloadWrapper {
 
     @JsonAnySetter
     public void setMap(String name, String value) {
-        this.map.put(name,value);
+        this.map.put(name, value);
     }
 
     public Optional<String> get(String key) {
         return Optional.of(map.get(key));
     }
 
-    public String getNullable(String key) {return map.get(key);}
+    public String getNullable(String key) {
+        return map.get(key);
+    }
 }

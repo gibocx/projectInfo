@@ -9,7 +9,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Logger;
 
 public class CheckForDownload implements Runnable {
-    private static final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getLogger(CheckForDownload.class.getName());
     private static final int MIN_CHECK_PERIOD = 2;
     private static Set<Job> jobs;
     private static ScheduledFuture<CheckForDownload> future;

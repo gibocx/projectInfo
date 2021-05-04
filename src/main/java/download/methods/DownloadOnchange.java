@@ -30,7 +30,7 @@ class DownloadOnchange implements DownloadMethod {
         action.init();
 
         for (Category category : categories) {
-            byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
+            byte[] data = Download.downloadByteArray(Placeholders.replace(url, category), contentType);
 
             category.setLastDownloaded(Time.getUnixTimestamp());
 

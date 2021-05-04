@@ -7,10 +7,11 @@ import utility.Placeholders;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class ActionSaveToFile implements DownloadAction {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(ActionSaveToFile.class.getName());
     private final String path;
 
     public ActionSaveToFile(String path) {
@@ -30,7 +31,7 @@ class ActionSaveToFile implements DownloadAction {
             return false;
         }
 
-        String compPath = computePath(category.getName());
+        String compPath = computePath(category);
 
         try {
             if (FileStuff.createFile(compPath)) {
@@ -41,13 +42,13 @@ class ActionSaveToFile implements DownloadAction {
             }
         } catch (IOException ex) {
             FileStuff.delete(compPath);
-            logger.info("IOException in ActionSaveToFile " + ex.getMessage());
+            logger.log(Level.INFO, "Unable to write data to file", ex);
         }
 
         return false;
     }
 
-    String computePath(String category) {
+    String computePath(Category category) {
         return Placeholders.replace(this.path, category);
     }
 
@@ -58,6 +59,5 @@ class ActionSaveToFile implements DownloadAction {
     protected String getRawPath() {
         return this.path;
     }
-
 }
 

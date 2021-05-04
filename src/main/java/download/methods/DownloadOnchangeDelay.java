@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 class DownloadOnchangeDelay implements DownloadMethod {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(DownloadOnchangeDelay.class.getName());
     private final String url, contentType;
     private final long minTimeDifference;
 
@@ -48,7 +48,7 @@ class DownloadOnchangeDelay implements DownloadMethod {
 
         for (Category category : categories) {
             if (checkCategory(category)) {
-                byte[] data = Download.downloadByteArray(Placeholders.replace(url,category.getName()), contentType);
+                byte[] data = Download.downloadByteArray(Placeholders.replace(url, category), contentType);
 
                 category.setLastDownloaded(Time.getUnixTimestamp());
 

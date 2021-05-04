@@ -31,7 +31,7 @@ public class ActionSaveToZipTest {
     public void getZipEntryName() {
         ActionSaveToZip action = new ActionSaveToZip("file.zip","entry#category#");
 
-        Assert.assertEquals("entryCATEGORY",action.getZipEntryName(new Category("CATEGORY").getName()));
+        Assert.assertEquals("entryCATEGORY",action.getZipEntryName(new Category("CATEGORY")));
     }
 
     @Test
