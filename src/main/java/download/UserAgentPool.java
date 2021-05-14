@@ -81,6 +81,10 @@ public class UserAgentPool {
         return readAgentsFromFile(userAgentFile);
     }
 
+    /**
+     * Sets the dataFormat of the UserAgent file. When the {@link download.DataFormat} is null, {@link download.DataFormat#NONE} is used.
+     * @param dataFormat
+     */
     public static void setDataFormat(DataFormat dataFormat) {
         if (dataFormat != null) {
             UserAgentPool.dataFormat = dataFormat;
@@ -90,6 +94,11 @@ public class UserAgentPool {
         }
     }
 
+    /**
+     * Sets the dataFormat of the UserAgent file. When the supplied {@code String} is not available in the enum
+     * {@link download.DataFormat}, {@link download.DataFormat#NONE} is used.
+     * @param format Name of the DataFormat
+     */
     public static void setDataFormat(String format) {
         if (format != null) {
             dataFormat = DataFormat.enumOf(format);
@@ -99,6 +108,10 @@ public class UserAgentPool {
         }
     }
 
+    /**
+     * Retrieves a random userAgent, either from the specified sources or returns a standard Agent.
+     * @return userAgent
+     */
     public static String getUserAgent() {
         if (agents.isEmpty()) {
             return DEFAULT_USER_AGENT;
@@ -106,6 +119,9 @@ public class UserAgentPool {
         return agents.get(ThreadRandom.randAbs(agents.size()));
     }
 
+    /**
+     * Clears all added userAgents
+     */
     public static void clear() {
         agents.clear();
     }
@@ -126,7 +142,7 @@ public class UserAgentPool {
     }
 
     /**
-     * Schedules the UserAgentPool at the specified rate. When the reload period is
+     * Schedules the UserAgentPool at the specified rate. When the reload period is smaller or equal to
      * 0 the reload is canceled.
      *
      * @param reloadPeriod Rate at which the reload is performed
@@ -141,7 +157,7 @@ public class UserAgentPool {
         }
 
         // Cancel automatic reload
-        if (reloadPeriod == 0) {
+        if (reloadPeriod <= 0) {
             return true;
         }
 

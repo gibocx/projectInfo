@@ -36,16 +36,15 @@ public class ReadConfig {
      */
     public static boolean forceRead() {
         TimeDiff time = new TimeDiff();
-
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         try {
             ConfigWrapper config = mapper.readValue(new File("projectInfo.yaml"), ConfigWrapper.class);
 
             Connect.start(config.getDb());
-
-            ExecutorHandler.startExecutor(config.getExecutorThreads());
-            ExecutorHandler.startScheduledExecutor(config.getScheduledThreads());
+            configureExecutorHandler(config);
+            configureUserAgentPool(config.getDownload());
+            configureDownloadTimeouts(config.getDownload());
 
             if (config.isAutomaticReload()) {
                 CheckForReload.schedule(config.getCheckConfigReload());
@@ -53,13 +52,9 @@ public class ReadConfig {
                 CheckForReload.cancel();
             }
 
-            configureUserAgentPool(config.getDownload());
-            configureDownloadTimeouts(config.getDownload());
-
             CheckForDownload.setJobs(config.getJobs());
             CheckForDownload.schedule(config.getCheckIntervals());
 
-            // when not already started schedule
             HealthCheck.schedule(300);
             UpSince.schedule();
 
@@ -74,6 +69,11 @@ public class ReadConfig {
                 " checksum = " + configFileChecksum);
 
         return true;
+    }
+
+    private static void configureExecutorHandler(ConfigWrapper config) {
+        ExecutorHandler.startExecutor(config.getExecutorThreads());
+        ExecutorHandler.startScheduledExecutor(config.getScheduledThreads());
     }
 
     /**

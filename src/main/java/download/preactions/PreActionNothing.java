@@ -8,7 +8,7 @@ class PreActionNothing implements PreAction {
     public PreActionNothing(Object... args) {
     }
 
-    public byte[] compute(byte[] data) {
-        return data;
+    public boolean compute(final byte[] data) {
+        return true;
     }
 }

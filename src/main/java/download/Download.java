@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -60,18 +59,7 @@ public class Download {
         }
         return new byte[0];
     }
-
-    /**
-     * Downloads the given url
-     *
-     * @param url         url to download
-     * @param contentType content type of the accessed item
-     * @return downloaded contents as UTF-8 String
-     */
-    public static String downloadString(String url, String contentType) {
-        return replaceEscapes(contentType, new String(downloadByteArray(url, contentType), StandardCharsets.UTF_8));
-    }
-
+    
     private static HttpURLConnection connectionSetProperties(String url, String contentType) throws IOException {
 
         HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();

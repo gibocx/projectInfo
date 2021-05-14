@@ -3,7 +3,8 @@ package control;
 import control.executorhandler.ExecutorHandler;
 import download.Category;
 import download.Downloadable;
-import download.actions.DownloadActions;
+import download.DownloadActions;
+import download.QueueStatus;
 import download.methods.DownloadMethod;
 
 import java.util.Objects;
@@ -11,12 +12,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class Job {
-
     private static final Logger logger = Logger.getLogger(Job.class.getName());
     private final String name, description;
     private final DownloadMethod method;
     private final DownloadActions actions;
     private final Set<Category> categories;
+    private final QueueStatus status = new QueueStatus();
 
     public Job(String name, String description, DownloadMethod method, DownloadActions actions, Set<String> categories) {
         if (method == null)
@@ -57,8 +58,10 @@ public class Job {
      * Submits a new Downloadable from this Job for execution
      */
     public void submit() {
-        logger.fine(() -> "Submitted Job name: " + this.getName() + " ; description : " + this.getDescription());
-        ExecutorHandler.submit(new Downloadable(method, actions, categories));
+        if(status.addWhenNotQueued()) {
+            logger.fine(() -> "Submitted Job name: " + this.getName() + " ; description : " + this.getDescription());
+            ExecutorHandler.submit(new Downloadable(method, actions, categories, status));
+        }
     }
 
     /**

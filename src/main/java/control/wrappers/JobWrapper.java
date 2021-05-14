@@ -1,9 +1,10 @@
 package control.wrappers;
 
 import control.Job;
-import download.actions.DownloadActions;
+import download.DownloadActions;
 import download.methods.DownloadMethodFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -15,7 +16,7 @@ public class JobWrapper {
     private String name, description;
     private Set<String> categories;
     private Set<ActionWrapper> actions;
-    private PreActionWrapper preAction;
+    private List<PreActionWrapper> preActions;
 
     Job toJob() {
         return new Job(name, description, DownloadMethodFactory.newMethod(download),
@@ -23,7 +24,7 @@ public class JobWrapper {
     }
 
     private DownloadActions getDownloadActions() {
-        return new DownloadActions(ActionWrapper.getActions(actions), preAction.getPreAction());
+        return new DownloadActions(ActionWrapper.getActions(actions), PreActionWrapper.getPreActions(preActions));
     }
 
     private void setActions(Set<ActionWrapper> actions) {
@@ -46,8 +47,8 @@ public class JobWrapper {
         this.categories = categories;
     }
 
-    public void setPreAction(PreActionWrapper preAction) {
-        this.preAction = preAction;
+    public void setPreAction(List<PreActionWrapper> preActions) {
+        this.preActions = preActions;
     }
 
     @Override
@@ -55,13 +56,11 @@ public class JobWrapper {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JobWrapper that = (JobWrapper) o;
-        return Objects.equals(name, that.name) && Objects.equals(description, that.description)
-                && download.equals(that.download) && categories.equals(that.categories) && actions.equals(that.actions)
-                && preAction.equals(that.preAction);
+        return Objects.equals(download, that.download) && Objects.equals(categories, that.categories) && Objects.equals(actions, that.actions) && Objects.equals(preActions, that.preActions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(download, categories, actions, preAction);
+        return Objects.hash(download, categories, actions, preActions);
     }
 }

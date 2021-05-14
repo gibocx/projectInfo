@@ -1,7 +1,7 @@
 package download.methods;
 
 import download.Category;
-import download.actions.DownloadActions;
+import download.DownloadActions;
 
 import java.util.Set;
 

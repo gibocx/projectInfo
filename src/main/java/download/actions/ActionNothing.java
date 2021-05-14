@@ -12,7 +12,7 @@ class ActionNothing implements DownloadAction {
     public ActionNothing() {
     }
 
-    public ActionNothing(Object... args) {
+    public ActionNothing(final Object... args) {
     }
 
     /**
@@ -23,7 +23,7 @@ class ActionNothing implements DownloadAction {
      * @return true when everything successful else false
      */
     @Override
-    public boolean action(byte[] data, Category category) {
+    public boolean action(final byte[] data, final Category category) {
         return true;
     }
 

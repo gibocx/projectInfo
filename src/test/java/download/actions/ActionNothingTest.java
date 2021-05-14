@@ -8,8 +8,8 @@ public class ActionNothingTest {
 
     @Test
     public void constructorsDoNothing() {
-        ActionNothing act = new ActionNothing();
-        act = new ActionNothing(new Object());
+        new ActionNothing();
+        new ActionNothing(new Object());
     }
 
     @Test

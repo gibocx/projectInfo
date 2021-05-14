@@ -2,7 +2,7 @@ package download.methods;
 
 import download.Category;
 import download.Download;
-import download.actions.DownloadActions;
+import download.DownloadActions;
 import utility.CalcChecksum;
 import utility.Placeholders;
 import utility.Time;
@@ -85,7 +85,7 @@ class DownloadAfter implements DownloadMethod {
 
     private long getOldestDownload(Set<Category> categories) {
         return categories.stream().min(Comparator.comparingLong(Category::getLastDownloaded))
-                .orElse(new Category("null")).getLastDownloaded();
+                .orElse(Category.EMPTY_CATEGORY).getLastDownloaded();
     }
 
     /**

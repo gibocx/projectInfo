@@ -7,6 +7,7 @@ import utility.Placeholders;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,7 @@ class ActionSaveToFile implements DownloadAction {
         this(action.getNullable("path"));
     }
 
-    public boolean action(byte[] data, Category category) {
+    public boolean action(final byte[] data, final Category category) {
         if (data == null || category == null) {
             return false;
         }
@@ -48,7 +49,7 @@ class ActionSaveToFile implements DownloadAction {
         return false;
     }
 
-    String computePath(Category category) {
+    String computePath(final Category category) {
         return Placeholders.replace(this.path, category);
     }
 
@@ -58,6 +59,19 @@ class ActionSaveToFile implements DownloadAction {
 
     protected String getRawPath() {
         return this.path;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActionSaveToFile that = (ActionSaveToFile) o;
+        return Objects.equals(path, that.path);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(path);
     }
 }
 

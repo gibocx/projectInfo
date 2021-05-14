@@ -7,6 +7,7 @@ import utility.FileStuff;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -21,12 +22,12 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
 
     }
 
-    public ActionSaveToZipBatch(ActionWrapper action) {
+    public ActionSaveToZipBatch(final ActionWrapper action) {
         super(action.getNullable("filePath"), action.getNullable("zipEntryName"));
     }
 
     @Override
-    public boolean action(byte[] data, Category category) {
+    public boolean action(final byte[] data, final Category category) {
         try {
             if (out != null) {
                 ZipEntry e = new ZipEntry(super.getZipEntryName(category));
@@ -70,5 +71,19 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ActionSaveToZipBatch that = (ActionSaveToZipBatch) o;
+        return Objects.equals(out, that.out);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), out);
     }
 }

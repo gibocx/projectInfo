@@ -1,14 +1,19 @@
 package utility;
 
+import control.executorhandler.ExecutorHandler;
+
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Cache<K, V> {
-    public static final Long STD_TIME_TO_LIVE_MS = 300000L;
+    public static final Long STD_TIME_TO_LIVE_MS = 30_000L;
+    public static final int STD_CLEAN_PERIOD_MS = 3_000;
+    private static final Logger logger = Logger.getLogger(Cache.class.getName());
     private final Map<K, CacheValue<V>> map = new HashMap<>();
     private final Long normalTimeToLive;
 
@@ -16,11 +21,29 @@ public class Cache<K, V> {
         this(STD_TIME_TO_LIVE_MS);
     }
 
+    public Cache(final Long normalTimeToLive, final int cleanPeriod) {
+        if(normalTimeToLive > 0) {
+            this.normalTimeToLive = normalTimeToLive;
+        } else {
+            logger.info(() -> "normalTimeToLive must be greater than 0 MS, was " + normalTimeToLive + "; set " +
+                    "to STD_TIME_TO_LIVE_MS : " + STD_TIME_TO_LIVE_MS);
+            this.normalTimeToLive = STD_TIME_TO_LIVE_MS;
+        }
+
+        if(cleanPeriod > 0) {
+            ExecutorHandler.scheduleAtFixedRate(this::clean,cleanPeriod,cleanPeriod);
+        } else {
+            logger.info(() -> "cleanPeriod must be greater than 0 MS, was " + cleanPeriod + "; set " +
+                    "to STD_CLEAN_PERIOD_MS : " + STD_TIME_TO_LIVE_MS);
+            ExecutorHandler.scheduleAtFixedRate(this::clean,STD_CLEAN_PERIOD_MS,STD_CLEAN_PERIOD_MS);
+        }
+    }
+
     /**
      * @param normalTimeToLive standard TTL in milliseconds
      */
-    public Cache(Long normalTimeToLive) {
-        this.normalTimeToLive = normalTimeToLive;
+    public Cache(final Long normalTimeToLive) {
+        this(normalTimeToLive, STD_CLEAN_PERIOD_MS);
     }
 
     public void clean() {
@@ -29,7 +52,7 @@ public class Cache<K, V> {
         }
     }
 
-    public boolean containsKey(K key) {
+    public boolean containsKey(final K key) {
         return map.containsKey(key);
     }
 
@@ -37,8 +60,7 @@ public class Cache<K, V> {
         map.clear();
     }
 
-    public Optional<V> get(K key) {
-        clean();
+    public Optional<V> get(final K key) {
         return Optional.ofNullable(map.get(key)).map(CacheValue::getValue);
     }
 
@@ -47,19 +69,20 @@ public class Cache<K, V> {
      * @param value      Object to store
      * @param timeToLive TTL for the object to live in milliseconds
      */
-    public void put(K key, V value, long timeToLive) {
+    public void put(final K key, final V value, final long timeToLive) {
         if (value == null) {
             remove(key);
         }
 
         map.put(key, new CacheValue<>(value, timeToLive));
+        clean();
     }
 
-    public void put(K key, V value) {
+    public void put(final K key, final V value) {
         put(key, value, normalTimeToLive);
     }
 
-    public void remove(K key) {
+    public void remove(final K key) {
         map.remove(key);
     }
 
@@ -69,7 +92,7 @@ public class Cache<K, V> {
                 .collect(Collectors.toSet());
     }
 
-    private boolean isExpired(K key) {
+    private boolean isExpired(final K key) {
         return (map.get(key).validUntil() < Instant.now().toEpochMilli());
     }
 
@@ -81,7 +104,7 @@ public class Cache<K, V> {
          * @param value      Object to store
          * @param timeToLive TTL of the object in MS
          */
-        protected CacheValue(V value, long timeToLive) {
+        protected CacheValue(final V value, final long timeToLive) {
             this.value = value;
             this.validUntil = Instant.now().toEpochMilli() + timeToLive;
         }

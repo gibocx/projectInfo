@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Category {
+    public static final Category EMPTY_CATEGORY = new Category("");
     private final String name;
     private long checksum, lastDownloaded;
 

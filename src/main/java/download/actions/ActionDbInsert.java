@@ -9,6 +9,7 @@ import download.actions.insert.InsertInfo;
 import download.actions.insert.InsertMethodFactory;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 class ActionDbInsert implements DownloadAction {
@@ -21,10 +22,9 @@ class ActionDbInsert implements DownloadAction {
         in = new InsertInfo(action.getMap());
     }
 
-    public boolean action(byte[] data, Category category) {
+    public boolean action(final byte[] data, final Category category) {
         if (dataBaseAvailable) {
-            String str = new String(data, StandardCharsets.UTF_8);
-            return insertData.insert(str, category);
+            return insertData.insert(new String(data, StandardCharsets.UTF_8), category);
         }
 
         return false;
@@ -49,5 +49,18 @@ class ActionDbInsert implements DownloadAction {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActionDbInsert that = (ActionDbInsert) o;
+        return Objects.equals(in, that.in) && Objects.equals(insertData, that.insertData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(in, insertData);
     }
 }

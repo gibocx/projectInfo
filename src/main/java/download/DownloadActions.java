@@ -1,9 +1,10 @@
-package download.actions;
+package download;
 
-import download.Category;
+import download.actions.DownloadAction;
 import download.preactions.PreAction;
 import utility.TimeDiff;
 
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -13,11 +14,11 @@ import java.util.logging.Logger;
 public class DownloadActions implements DownloadAction {
     private static final Logger logger = Logger.getLogger(DownloadAction.class.getName());
     private final Set<DownloadAction> actions;
-    private PreAction preAction;
+    private PreActions preActions;
 
-    public DownloadActions(Set<DownloadAction> actions, PreAction preAction) {
+    public DownloadActions(Set<DownloadAction> actions, List<PreAction> preActions) {
         this.actions = actions;
-        this.preAction = preAction;
+        this.preActions = new PreActions(preActions);
     }
 
     /**
@@ -29,13 +30,13 @@ public class DownloadActions implements DownloadAction {
         this.actions = actions;
     }
 
-    public boolean action(byte[] data, Category category) {
+    public boolean action(byte[] data, final Category category) {
         boolean success = true;
         TimeDiff time = new TimeDiff();
 
-        if (preAction != null) {
-            data = preAction.compute(data);
-            logger.severe("PreAction(" + preAction.getClass() + ")took " + time.chooseBest());
+        if (preActions != null) {
+            preActions.compute(data);
+            logger.severe("PreAction took " + time.chooseBest());
         }
 
         time.reset();
@@ -74,4 +75,5 @@ public class DownloadActions implements DownloadAction {
 
         return success;
     }
+
 }

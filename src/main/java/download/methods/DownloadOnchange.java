@@ -2,7 +2,7 @@ package download.methods;
 
 import download.Category;
 import download.Download;
-import download.actions.DownloadActions;
+import download.DownloadActions;
 import utility.CalcChecksum;
 import utility.Placeholders;
 import utility.Time;

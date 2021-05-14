@@ -4,7 +4,7 @@ import control.wrappers.ActionWrapper;
 
 
 public class DownloadActionFactory {
-    public static DownloadAction newAction(ActionWrapper action) {
+    public static DownloadAction newAction(final ActionWrapper action) {
         if (action == null) {
             throw new IllegalArgumentException("ActionWrapper can not be null!");
         } else {

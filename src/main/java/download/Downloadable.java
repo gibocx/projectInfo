@@ -1,7 +1,5 @@
 package download;
 
-import download.actions.DownloadAction;
-import download.actions.DownloadActions;
 import download.methods.DownloadMethod;
 import utility.TimeDiff;
 
@@ -13,11 +11,14 @@ public class Downloadable implements Runnable {
     private final DownloadMethod method;
     private final DownloadActions action;
     private final Set<Category> categories;
+    private final QueueStatus status;
 
-    public Downloadable(DownloadMethod method, DownloadActions action, Set<Category> categories) {
+    public Downloadable(final DownloadMethod method, final DownloadActions action, final Set<Category> categories,
+                        final QueueStatus status) {
         this.method = method;
         this.action = action;
         this.categories = categories;
+        this.status = status;
     }
 
     @Override
@@ -25,11 +26,7 @@ public class Downloadable implements Runnable {
         TimeDiff time = new TimeDiff();
 
         method.download(categories, action);
-
         logger.fine(() -> "Time " + time.chooseBest());
-    }
-
-    public DownloadAction getAction() {
-        return action;
+        status.removeFromQueue();
     }
 }
