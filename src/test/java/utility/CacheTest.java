@@ -7,7 +7,7 @@ public class CacheTest {
 
     @Test
     public void simpleTest() {
-        Cache<String, String> cache = new Cache<>(300000L);
+        Cache<String, String> cache = new Cache<>(300000L,0);
 
         for(int i = 0; i < 1000;i++) {
             cache.put(String.valueOf(i), String.valueOf(i));
@@ -22,7 +22,7 @@ public class CacheTest {
 
     @Test
     public void timeoutTest() {
-        Cache<String, String> cache = new Cache<>(1L);
+        Cache<String, String> cache = new Cache<>(1L,0);
 
         for(int i = 0; i < 1000;i++) {
             cache.put(String.valueOf(i), String.valueOf(i));
@@ -31,5 +31,4 @@ public class CacheTest {
         Assert.assertEquals("",cache.get(String.valueOf(10)).orElse(""));
 
     }
-
 }

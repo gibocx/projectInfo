@@ -1,6 +1,6 @@
 package download;
 
-import control.executorhandler.ExecutorHandler;
+import control.executorhandler.Schedulable;
 import utility.CalcChecksum;
 import utility.FileStuff;
 import utility.Readers;
@@ -8,7 +8,6 @@ import utility.ThreadRandom;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class UserAgentPool {
@@ -20,7 +19,7 @@ public class UserAgentPool {
     private static ArrayList<String> agents = new ArrayList<>();
     private static DataFormat dataFormat = DataFormat.NONE;
     private static File userAgentFile;
-    private static Future<UserAgentPool> future;
+    private static final Schedulable schedule = new Schedulable(UserAgentPool::readAgentsFromFile);
 
     public static void addAgent(String agent) {
         if (agent != null)
@@ -146,28 +145,8 @@ public class UserAgentPool {
      * 0 the reload is canceled.
      *
      * @param reloadPeriod Rate at which the reload is performed
-     * @return true if success
      */
-    public static boolean scheduleReadAgentsReload(int reloadPeriod) {
-        if (future != null) {
-            if (!future.cancel(false)) {
-                logger.severe("ReadAgentsReload could not cancel the ReadAgentsReload task!! ");
-                return false;
-            }
-        }
-
-        // Cancel automatic reload
-        if (reloadPeriod <= 0) {
-            return true;
-        }
-
-        if (reloadPeriod < MIN_RELOAD_CHECK) {
-            logger.info("UserAgent reloadPeriod was " + reloadPeriod + " sec but needs to be min " + MIN_RELOAD_CHECK + " sec");
-            reloadPeriod = MIN_RELOAD_CHECK;
-        }
-
-        future = (Future<UserAgentPool>) ExecutorHandler.scheduleAtFixedRate(UserAgentPool::readAgentsFromFile, reloadPeriod);
-        return true;
+    public static void scheduleReadAgentsReload(int reloadPeriod) {
+        schedule.scheduleAtFixedRate(reloadPeriod);
     }
-
 }

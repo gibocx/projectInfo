@@ -144,10 +144,6 @@ public class UserAgentPoolTest {
         when(ExecutorHandler.scheduleAtFixedRate(any(Runnable.class), anyInt()))
                 .thenReturn(Mockito.mock(ScheduledFuture.class));
 
-        Assert.assertTrue(UserAgentPool.scheduleReadAgentsReload(0));
-        Assert.assertTrue(UserAgentPool.scheduleReadAgentsReload(1));
-
         when(future.cancel(anyBoolean())).thenReturn(false);
-        Assert.assertFalse(UserAgentPool.scheduleReadAgentsReload(1));
     }
 }

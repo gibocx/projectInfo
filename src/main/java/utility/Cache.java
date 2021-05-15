@@ -33,9 +33,7 @@ public class Cache<K, V> {
         if(cleanPeriod > 0) {
             ExecutorHandler.scheduleAtFixedRate(this::clean,cleanPeriod,cleanPeriod);
         } else {
-            logger.info(() -> "cleanPeriod must be greater than 0 MS, was " + cleanPeriod + "; set " +
-                    "to STD_CLEAN_PERIOD_MS : " + STD_TIME_TO_LIVE_MS);
-            ExecutorHandler.scheduleAtFixedRate(this::clean,STD_CLEAN_PERIOD_MS,STD_CLEAN_PERIOD_MS);
+            logger.info(() -> "cleanPeriod has to be greater than 0 MS to enable autoclean " + cleanPeriod);
         }
     }
 

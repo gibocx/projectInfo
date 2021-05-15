@@ -7,6 +7,11 @@ import java.util.logging.Logger;
 public class FileStuff {
     private static final Logger logger = Logger.getLogger(FileStuff.class.getName());
 
+    /**
+     * Checks the given File for validity.
+     * @param file File to Check
+     * @return only true when file is valid and a file
+     */
     public static boolean isValid(final File file) {
         if (file != null) {
             return (file.exists() && file.isFile());
@@ -15,6 +20,11 @@ public class FileStuff {
         return false;
     }
 
+    /**
+     * Checks the given filePath for validity.
+     * @param path
+     * @return only true when file is valid and a file
+     */
     public static boolean isValid(final String path) {
         if (path != null) {
             File tmp = new File(path);

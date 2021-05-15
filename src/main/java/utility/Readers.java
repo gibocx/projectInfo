@@ -14,6 +14,11 @@ import java.util.logging.Logger;
 public class Readers {
     private static final Logger logger = Logger.getLogger(Readers.class.getName());
 
+    /**
+     * Reads the given file line by line by line as string
+     * @param file file to read
+     * @param func String consumer of the currently read line
+     */
     public static void readLineByLine(File file, Consumer<String> func) {
         if(FileStuff.isValid(file)) {
             try {
@@ -21,6 +26,17 @@ public class Readers {
             } catch (FileNotFoundException ex) {
                 logger.log(Level.FINE, "File " + file.getName() + " could not be found!", ex);
             }
+        }
+    }
+
+    /**
+     * Reads the given String line by line by line as string
+     * @param str String to read
+     * @param func String consumer of the currently read line
+     */
+    public static void readLineByLine(String str, Consumer<String> func) {
+        if (str != null) {
+            readLineByLine(new StringReader(str), func);
         }
     }
 
@@ -35,12 +51,6 @@ public class Readers {
             } catch (IOException ex) {
                 logger.log(Level.FINE, "IOException", ex);
             }
-        }
-    }
-
-    public static void readLineByLine(String str, Consumer<String> func) {
-        if (str != null) {
-            readLineByLine(new StringReader(str), func);
         }
     }
 }

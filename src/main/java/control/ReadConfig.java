@@ -47,16 +47,16 @@ public class ReadConfig {
             configureDownloadTimeouts(config.getDownload());
 
             if (config.isAutomaticReload()) {
-                CheckForReload.schedule(config.getCheckConfigReload());
+                CheckForReload.schedule.scheduleAtFixedRate(config.getCheckConfigReload());
             } else {
-                CheckForReload.cancel();
+                CheckForReload.schedule.cancel();
             }
 
             CheckForDownload.setJobs(config.getJobs());
-            CheckForDownload.schedule(config.getCheckIntervals());
+            CheckForDownload.schedule.scheduleAtFixedRate(config.getCheckIntervals());
 
-            HealthCheck.schedule(300);
-            UpSince.schedule();
+            HealthCheck.schedule.scheduleAtFixedRate(300);
+            UpSince.schedule.scheduleAtFixedRate();
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unable to completely reload!", e);

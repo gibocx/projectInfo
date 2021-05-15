@@ -2,8 +2,8 @@ package control;
 
 import control.executorhandler.ExecutorHandler;
 import download.Category;
-import download.Downloadable;
 import download.DownloadActions;
+import download.Downloadable;
 import download.QueueStatus;
 import download.methods.DownloadMethod;
 

@@ -1,41 +1,18 @@
 package control.status;
 
 import control.ReadConfig;
-import control.executorhandler.ExecutorHandler;
+import control.executorhandler.Schedulable;
 import utility.TimeDiff;
 
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
-public class CheckForReload implements Runnable {
+public class CheckForReload {
+    public static final Schedulable schedule = new Schedulable(CheckForReload::readConfig,30,Integer.MAX_VALUE);
     private static final Logger logger = Logger.getLogger(CheckForReload.class.getName());
-    private static final int MIN_RELOAD_PERIOD = 30;
     private static Future<CheckForReload> future;
 
-    public static void schedule(int period) {
-        if (future != null) {
-            return;
-        }
-
-        if (period < MIN_RELOAD_PERIOD) {
-            period = MIN_RELOAD_PERIOD;
-        }
-
-        future = (Future<CheckForReload>) ExecutorHandler.scheduleAtFixedRate(new CheckForReload(), period, period);
-    }
-
-    /**
-     * Cancels the Runnable
-     */
-    public static void cancel() {
-        if (future != null) {
-            future.cancel(false);
-            future = null;
-        }
-    }
-
-    @Override
-    public void run() {
+    public static void readConfig() {
         TimeDiff time = new TimeDiff();
 
         ReadConfig.read();

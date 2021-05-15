@@ -4,9 +4,12 @@ import control.wrappers.PreActionWrapper;
 import utility.Contains;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class PreActionRemoveLines implements PreAction {
@@ -34,35 +37,49 @@ class PreActionRemoveLines implements PreAction {
      * @return byte[] without the specified lines
      */
     @Override
-    public byte[] compute(byte[] data) {
+    public boolean compute(byte[] data) {
         if (linesToRemove.length == 0) {
             logger.fine("No lines to remove!");
-            return data;
+            return false;
         }
 
-        try (BufferedReader reader = new BufferedReader(new StringReader(new String(data, StandardCharsets.UTF_8)))) {
-            StringBuilder builder = new StringBuilder();
-            String lineSeparator = System.getProperty("line.separator");
+        StringBuilder builder = new StringBuilder(data.length/2);
+        String line = null;
+        String lineSeparator = System.lineSeparator();
+        int lineCnt = 0;
 
-            String currentLine;
-            int line = -1;
-
-            while ((currentLine = reader.readLine()) != null) {
-                line++;
-                if (Contains.contains(line, linesToRemove)) {
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(data)));
+            while((line = reader.readLine()) != null) {
+                if(Contains.contains(lineCnt++,linesToRemove)) {
                     continue;
                 }
-                builder.append(currentLine).append(lineSeparator);
-            }
-            reader.close();
 
-            return builder.toString().getBytes(StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            return new byte[0];
+                builder.append(line).append(lineSeparator);
+            }
+
+            data = builder.toString().getBytes(StandardCharsets.UTF_8);
+            return true;
+        } catch(IOException ex) {
+            logger.log(Level.INFO, "Unable to remove lines!",ex);
         }
+        return false;
     }
 
     protected void setLinesToRemove(int[] linesToRemove) {
         this.linesToRemove = linesToRemove;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PreActionRemoveLines that = (PreActionRemoveLines) o;
+        return Arrays.equals(linesToRemove, that.linesToRemove);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(linesToRemove);
     }
 }

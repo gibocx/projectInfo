@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -47,23 +48,18 @@ class ActionSaveToZipBatch extends ActionSaveToZip {
     @Override
     public boolean init() {
         String filePath = super.computePath();
-        try {
-            if (FileStuff.createFile(filePath)) {
-                this.out = new ZipOutputStream(new FileOutputStream(filePath));
-                return true;
-            } else {
-                logger.warning(() -> "unable to create file with path " + filePath);
-            }
-        } catch (FileNotFoundException ex) {
-            logger.log(Level.WARNING, "Should have created File but could not find file " + filePath, ex);
+
+        if (FileStuff.createFile(filePath)) {
+            out = getZipStream(filePath);
+        } else {
+            logger.warning(() -> "Unable to create file with path " + filePath);
         }
 
-        return false;
+        return (out != null);
     }
 
     @Override
     public boolean finish() {
-
         try {
             out.close();
         } catch (IOException ex) {

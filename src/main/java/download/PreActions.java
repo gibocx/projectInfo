@@ -13,11 +13,6 @@ public class PreActions implements PreAction {
     private static final Logger logger = Logger.getLogger(PreActions.class.getName());
     private final List<PreAction> preActions;
 
-    /**
-     * Uses the default PreAction Nothing
-     *
-     * @param actions
-     */
     public PreActions(List<PreAction> actions) {
         this.preActions = actions;
     }

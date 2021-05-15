@@ -66,7 +66,7 @@ public class CalcChecksum {
                     bytesRead = input.read(buffer);
                 }
             } catch (IOException ex) {
-                logger.log(Level.FINE, "IOException!", ex);
+                logger.log(Level.WARNING, "IOException!", ex);
                 return checksum((String) null);
             }
             return sum.getValue();

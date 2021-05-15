@@ -1,16 +1,15 @@
 package download;
 
-import control.executorhandler.ExecutorHandler;
+import control.executorhandler.Schedulable;
 
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 public class QueueStatus {
     public static int RESET_TIMEOUT_S = 30;
     private static final Logger logger = Logger.getLogger(QueueStatus.class.getName());
-    private ScheduledFuture<QueueStatus> future;
     private final AtomicBoolean status = new AtomicBoolean(false);
+    private final Schedulable schedule = new Schedulable(this::removeFromQueue);
 
     public boolean isInQueue() {
         return status.get();
@@ -21,10 +20,7 @@ public class QueueStatus {
      * @return true when successfully
      */
     public boolean removeFromQueue() {
-        if(future != null) {
-            future.cancel(false);
-        }
-
+        schedule.cancel();
         return status.compareAndSet(true, false);
     }
 
@@ -35,7 +31,7 @@ public class QueueStatus {
         boolean success = status.compareAndSet(false, true);
 
         if(success) {
-            future = (ScheduledFuture<QueueStatus>) ExecutorHandler.schedule(this::removeFromQueue,RESET_TIMEOUT_S);
+            schedule.schedule(RESET_TIMEOUT_S);
         }
 
         return success;
